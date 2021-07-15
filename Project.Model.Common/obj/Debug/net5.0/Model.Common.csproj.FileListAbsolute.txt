@@ -1,0 +1,12 @@
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\bin\Debug\net5.0\Model.Common.deps.json
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\bin\Debug\net5.0\Model.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\bin\Debug\net5.0\ref\Model.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\bin\Debug\net5.0\Model.Common.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.csproj.AssemblyReference.cache
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.AssemblyInfoInputs.cache
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.AssemblyInfo.cs
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.csproj.CoreCompileInputs.cache
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\ref\Model.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.pdb
