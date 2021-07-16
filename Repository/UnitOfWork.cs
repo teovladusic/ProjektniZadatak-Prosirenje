@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using Common;
+using DAL;
 using DAL.Models;
 using Repository.Common;
 using System;
@@ -13,10 +14,10 @@ namespace Repository
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(ApplicationDbContext context, ISortHelper<VehicleMake> _vehicleMakeSortHelper)
         {
             _context = context;
-            VehicleMakes = new VehicleMakesRepository(context);
+            VehicleMakes = new VehicleMakesRepository(context, _vehicleMakeSortHelper);
         }
         public IVehicleMakesRepository VehicleMakes { get; }
 

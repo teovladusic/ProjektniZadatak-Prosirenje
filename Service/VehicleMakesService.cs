@@ -30,7 +30,7 @@ namespace Service
             return await _unitOfWork.VehicleMakes.GetById(id);
         }
 
-        public async Task<List<VehicleMake>> GetVehicleMakes(IVehicleMakeFilterParams parameters)
+        public async Task<PagedList<VehicleMake>> GetVehicleMakes(IVehicleMakeFilterParams parameters)
         {
             return await _unitOfWork.VehicleMakes.GetAll(parameters);
         }

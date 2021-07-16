@@ -9,7 +9,7 @@ namespace Service.Common
 {
     public interface IVehicleMakesService
     {
-        Task<List<VehicleMake>> GetVehicleMakes(IVehicleMakeFilterParams parameters);
+        Task<PagedList<VehicleMake>> GetVehicleMakes(IVehicleMakeFilterParams parameters);
         Task<VehicleMake> GetVehicleMake(int id);
         Task InsertVehicleMake(VehicleMake vehicleMake);
         Task UpdateVehicleMake(VehicleMake vehicleMake);

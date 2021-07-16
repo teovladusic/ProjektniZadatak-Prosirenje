@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MBANcLb3irJhp2g0LjnOM1NQjJmZoo7qdFf7pcnLeZzDKGwfrIeQP+JcaNrdKKilQjdTNi0/QBmRyU12SqPzXg==",
+  "dgSpecHash": "GZFhDKbe4zqVA1XaBEgWIvUVHpwZTU3FQR9Na5v3B/lC79SapmXfk9CT0wnbXpsf+hTHc7pwMNLkAGfg1T23Kg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj",
   "expectedPackageFiles": [
@@ -63,6 +63,7 @@
     "C:\\Users\\Teo\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\Teo\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Teo\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
+    "C:\\Users\\Teo\\.nuget\\packages\\system.linq.dynamic.core\\1.2.10\\system.linq.dynamic.core.1.2.10.nupkg.sha512",
     "C:\\Users\\Teo\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\Teo\\.nuget\\packages\\system.net.nameresolution\\4.3.0\\system.net.nameresolution.4.3.0.nupkg.sha512",
     "C:\\Users\\Teo\\.nuget\\packages\\system.net.primitives\\4.3.0\\system.net.primitives.4.3.0.nupkg.sha512",

@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Common;
 using DAL;
 using DAL.Models;
 using Microsoft.AspNetCore.Builder;
@@ -51,6 +52,9 @@ namespace ProjektniZadatakProsirenje
 
             builder.RegisterType<Repository<VehicleMake>>().As<IRepository<VehicleMake>>();
             builder.RegisterType<VehicleMakesService>().As<IVehicleMakesService>();
+
+            builder.RegisterType<SortHelper<VehicleMake>>().As<ISortHelper<VehicleMake>>();
+            builder.RegisterType<SortHelper<VehicleModel>>().As<ISortHelper<VehicleModel>>();
 
             builder.RegisterType<Repository<VehicleModel>>().As<IRepository<VehicleModel>>();
 
