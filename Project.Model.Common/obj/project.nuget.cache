@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "kR0niLc2M9vS9J6aBwNy8IiOVlGpaKuSx8JKwZ67oEn8D3Wb9/CtMlz9ISWfq9cTg4lquUrPCNG+kvs8etZf1A==",
+  "dgSpecHash": "kgoXUyPJHBzu6JA8bpBDVBYM7w0+eAU/Q1c2VWH2FFLe/W6P50VDY5m0hbniKPo9vS968blsPPEo7kLUlHPwMw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model.Common\\Model.Common.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Teo\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Teo\\.nuget\\packages\\system.linq.dynamic.core\\1.2.10\\system.linq.dynamic.core.1.2.10.nupkg.sha512"
+  ],
   "logs": []
 }

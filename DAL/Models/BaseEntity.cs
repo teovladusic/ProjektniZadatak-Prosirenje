@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public abstract class BaseModel
+    public abstract class BaseEntity
     {
     }
 }

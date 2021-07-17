@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Common
 {
-    public interface IRepository<T> where T : BaseModel
+    public interface IRepository<T> where T : BaseEntity
     {
         Task<List<T>> GetAll();
         Task<T> GetById(object id);

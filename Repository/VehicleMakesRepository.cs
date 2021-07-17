@@ -1,7 +1,9 @@
-﻿using Common;
+﻿using AutoMapper;
+using Common;
 using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Project.Model;
 using Repository.Common;
 using System;
 using System.Collections.Generic;
@@ -23,9 +25,9 @@ namespace Repository
             _sortHelper = sortHelper;
         }
 
-        public async Task<PagedList<VehicleMake>> GetAll(IVehicleMakeFilterParams parameters)
+        public async Task<PagedList<VehicleMake>> GetAll(VehicleMakeFilterParams parameters)
         {
-            var vehicleMakes = from v in _context.VehicleMakes select v;
+            var vehicleMakes = (from v in _context.VehicleMakes select v).AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
             {
@@ -36,7 +38,7 @@ namespace Repository
             var sortedMakes = _sortHelper.ApplySort(vehicleMakes, parameters.SortParams.OrderBy);
 
             return await PagedList<VehicleMake>.ToPagedList(
-                sortedMakes,
+                sortedMakes, 
                 parameters.PagingParams.CurrentPage,
                 parameters.PagingParams.PageSize,
                 sortedMakes.Count());

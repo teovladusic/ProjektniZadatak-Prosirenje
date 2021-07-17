@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Repository.Common
 {
-    public class Repository<T> : IRepository<T> where T : BaseModel
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ApplicationDbContext _context;
-        private DbSet<T> _entities;
+        private readonly DbSet<T> _entities;
 
         public Repository(ApplicationDbContext dbContext)
         {
@@ -30,7 +30,7 @@ namespace Repository.Common
 
         public void Delete(T entity)
         {
-            _entities.Remove(entity);   
+            _entities.Remove(entity);
         }
 
 

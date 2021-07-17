@@ -18,3 +18,7 @@ C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\obj\Debug
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\obj\Debug\net5.0\Repository.Common.genruntimeconfig.cache
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\bin\Debug\net5.0\Common.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\bin\Debug\net5.0\Common.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\bin\Debug\net5.0\Model.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\bin\Debug\net5.0\Model.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\bin\Debug\net5.0\Model.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Common\bin\Debug\net5.0\Model.Common.pdb

@@ -1,11 +1,13 @@
-﻿using Common;
+﻿using AutoMapper;
+using Common;
 using DAL;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repository.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Repository
@@ -13,15 +15,52 @@ namespace Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        ISortHelper<VehicleMake> _vehicleMakeSortHelper;
+        ISortHelper<VehicleModel> _vehicleModelSortHelper;
+        ILogger<VehicleModelsRepository> _logger;
 
-        public UnitOfWork(ApplicationDbContext context, ISortHelper<VehicleMake> _vehicleMakeSortHelper)
+        public UnitOfWork(ApplicationDbContext context, ISortHelper<VehicleMake> vehicleMakeSortHelper, IMapper mapper,
+            ISortHelper<VehicleModel> vehicleModelSortHelper, ILogger<VehicleModelsRepository> logger)
         {
             _context = context;
-            VehicleMakes = new VehicleMakesRepository(context, _vehicleMakeSortHelper);
+            _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            _vehicleMakeSortHelper = vehicleMakeSortHelper;
+            _vehicleModelSortHelper = vehicleModelSortHelper;
+            _logger = logger;
         }
-        public IVehicleMakesRepository VehicleMakes { get; }
 
-        public IRepository<VehicleModel> VehicleModels { get; }
+        private IVehicleMakesRepository vehicleMakes;
+        public IVehicleMakesRepository VehicleMakes
+        {
+            get
+            {
+                if (vehicleMakes == null)
+                {
+                    this.vehicleMakes = new VehicleMakesRepository(_context, _vehicleMakeSortHelper);
+                }
+                return this.vehicleMakes;
+            }
+        }
+
+
+        private IVehicleModelsRepository vehicleModels;
+        public IVehicleModelsRepository VehicleModels
+        {
+            get
+            {
+                if (vehicleModels == null)
+                {
+                    this.vehicleModels = new VehicleModelsRepository(_context, _vehicleModelSortHelper, _logger);
+                }
+                return vehicleModels;
+            }
+        }
+
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
 
         public async Task<int> Complete()
         {

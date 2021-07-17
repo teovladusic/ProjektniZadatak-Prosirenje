@@ -10,3 +10,11 @@ C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\obj\Debug\net
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\obj\Debug\net5.0\Model.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\obj\Debug\net5.0\ref\Model.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\obj\Debug\net5.0\Model.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\bin\Debug\net5.0\Model.runtimeconfig.json
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\bin\Debug\net5.0\Model.runtimeconfig.dev.json
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\bin\Debug\net5.0\DAL.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\bin\Debug\net5.0\DAL.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\obj\Debug\net5.0\Model.csproj.CopyComplete
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\obj\Debug\net5.0\Model.genruntimeconfig.cache
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\bin\Debug\net5.0\Model.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Project.Model\bin\Debug\net5.0\Model.Common.pdb

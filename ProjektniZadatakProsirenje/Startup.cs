@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI;
 using WebAPI.Controllers;
+using Newtonsoft.Json;
 
 namespace ProjektniZadatakProsirenje
 {
@@ -50,15 +52,18 @@ namespace ProjektniZadatakProsirenje
         {
             builder.RegisterType<VehicleMakesController>().PropertiesAutowired();
 
-            builder.RegisterType<Repository<VehicleMake>>().As<IRepository<VehicleMake>>();
-            builder.RegisterType<VehicleMakesService>().As<IVehicleMakesService>();
+            builder.RegisterType<Repository<VehicleMake>>().As<IRepository<VehicleMake>>().InstancePerLifetimeScope();
+            builder.RegisterType<VehicleMakesService>().As<IVehicleMakesService>().InstancePerLifetimeScope();
+            builder.RegisterType<SortHelper<VehicleMake>>().As<ISortHelper<VehicleMake>>().InstancePerLifetimeScope();
 
-            builder.RegisterType<SortHelper<VehicleMake>>().As<ISortHelper<VehicleMake>>();
-            builder.RegisterType<SortHelper<VehicleModel>>().As<ISortHelper<VehicleModel>>();
 
-            builder.RegisterType<Repository<VehicleModel>>().As<IRepository<VehicleModel>>();
+            builder.RegisterType<VehicleModelsService>().As<IVehicleModelsService>().InstancePerLifetimeScope();
+            builder.RegisterType<SortHelper<VehicleModel>>().As<ISortHelper<VehicleModel>>().InstancePerLifetimeScope();
+            builder.RegisterType<Repository<VehicleModel>>().As<IRepository<VehicleModel>>().InstancePerLifetimeScope();
 
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterInstance(AutoMapperConfig.Initialize());
+
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             builder.Register(c =>
             {
@@ -66,6 +71,8 @@ namespace ProjektniZadatakProsirenje
 
                 var opt = new DbContextOptionsBuilder<ApplicationDbContext>();
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+                opt.EnableSensitiveDataLogging();
 
                 return new ApplicationDbContext(opt.Options);
             }).AsSelf().InstancePerLifetimeScope();

@@ -10,8 +10,7 @@ namespace Repository.Common
     public interface IUnitOfWork
     {
         IVehicleMakesRepository VehicleMakes { get; }
-        IRepository<VehicleModel> VehicleModels { get; }
-        //IRepository<VehicleMake> VehicleMakes { get; }
+        IVehicleModelsRepository VehicleModels { get; }
         Task<int> Complete();
     }
 }

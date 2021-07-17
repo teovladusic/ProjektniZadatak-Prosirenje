@@ -83,3 +83,10 @@ C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Common.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Common.pdb
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\System.Linq.Dynamic.Core.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Model.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Model.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Z.EntityFramework.Extensions.EFCore.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Model.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Model.Common.pdb

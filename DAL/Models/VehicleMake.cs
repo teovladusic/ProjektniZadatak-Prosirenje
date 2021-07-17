@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class VehicleMake : BaseModel
+    public class VehicleMake : BaseEntity
     {
         public int Id { get; set; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public class SortParams : ISortParams
+    public class SortParams
     {
         public string OrderBy { get; set; }
 

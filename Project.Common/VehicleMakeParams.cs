@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common
 {
+    //all vehicleMake parameters
     public class VehicleMakeParams : Params
     {
         public string SearchQuery { get; set; }

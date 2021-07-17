@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public class VehicleMakeFilterParams : IVehicleMakeFilterParams
+    public class VehicleMakeFilterParams : IFilterParams
     {
-        public ISortParams SortParams { get; set; }
-        public IPagingParams PagingParams { get; set; }
+        public VehicleMakeFilterParams(SortParams sortParams, PagingParams pagingParams, string searchQuery)
+        {
+            SortParams = sortParams;
+            PagingParams = pagingParams;
+            SearchQuery = searchQuery;
+        }
+        public SortParams SortParams { get; set; }
+        public PagingParams PagingParams { get; set; }
         public string SearchQuery { get; set; }
     }
 }
