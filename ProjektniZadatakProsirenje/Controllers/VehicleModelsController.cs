@@ -16,31 +16,31 @@ namespace WebAPI.Controllers
     public class VehicleModelsController : Controller
     {
         private readonly IVehicleModelsService _vehicleModelsService;
-        private readonly ILogger<VehicleMakesController> _logger;
+        private readonly ILogger<VehicleModelsController> _logger;
 
-        public VehicleModelsController(IVehicleModelsService vehicleModelsService, ILogger<VehicleMakesController> logger)
+        public VehicleModelsController(IVehicleModelsService vehicleModelsService, ILogger<VehicleModelsController> logger)
         {
             _vehicleModelsService = vehicleModelsService;
             _logger = logger;
         }
 
 
-        //GET /VehicleMakes
+        //GET /VehicleModels
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] VehicleModelParams vehicleMakeParams)
+        public async Task<IActionResult> Index([FromQuery] VehicleModelParams vehicleModelParams)
         {
-            var pagingParams = new PagingParams(vehicleMakeParams.PageNumber, vehicleMakeParams.PageSize);
-            var sortParams = new SortParams(vehicleMakeParams.OrderBy);
+            var pagingParams = new PagingParams(vehicleModelParams.PageNumber, vehicleModelParams.PageSize);
+            var sortParams = new SortParams(vehicleModelParams.OrderBy);
 
-            var parameters = new VehicleModelFilterParams(pagingParams, sortParams, vehicleMakeParams.SearchQuery,
-                vehicleMakeParams.MakeName);
+            var parameters = new VehicleModelFilterParams(pagingParams, sortParams, vehicleModelParams.SearchQuery,
+                vehicleModelParams.MakeName);
 
-            var makes = await _vehicleModelsService.GetVehicleModels(parameters);
+            var models = await _vehicleModelsService.GetVehicleModels(parameters);
 
-            return Ok(makes);
+            return Ok(models);
         }
 
-        //GET /VehicleMakes/{id}
+        //GET /VehicleModels/{id}
         [HttpGet("Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,7 +59,34 @@ namespace WebAPI.Controllers
             return Ok(vehicleModel);
         }
 
-        //POST /VehicleMakes/Delete/{id}
+        //POST /VehicleModels/Create
+        [HttpPost("Create/")]
+        public async Task<IActionResult> Create([Bind("Name,Abrv,VehicleMakeId")] CreateVehicleModelViewModel createVehicleModelViewModel)
+        {
+            if (string.IsNullOrEmpty(createVehicleModelViewModel.Name.Trim()) ||
+                string.IsNullOrEmpty(createVehicleModelViewModel.Abrv.Trim()) ||
+                createVehicleModelViewModel.VehicleMakeId < 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var response = await _vehicleModelsService.InsertVehicleModel(createVehicleModelViewModel);
+                if (response is null)
+                {
+                    return BadRequest();
+                }
+
+                return Created(response.Id.ToString(), response);
+            }
+            catch (Exception _)
+            {
+                return BadRequest("Invalid parameters. Check make ID!");
+            }
+        }
+
+        //POST /VehicleModels/Delete/{id}
         [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -80,28 +107,33 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        //POST /VehicleMakes/Create
-        [HttpPost("Create/")]
-        public async Task<IActionResult> Create([Bind("Name,Abrv,VehicleMakeId")] CreateVehicleModelViewModel createVehicleMakeViewModel)
-        {
-            await _vehicleModelsService.InsertVehicleModel(createVehicleMakeViewModel);
-
-            return Ok();
-        }
-
         [HttpPost("Edit/")]
         public async Task<IActionResult> Edit([Bind("Id,Name,Abrv,VehicleMakeId")] EditVehicleModelViewModel editVehicleModelViewModel)
         {
+            if (string.IsNullOrEmpty(editVehicleModelViewModel.Name.Trim()) ||
+               string.IsNullOrEmpty(editVehicleModelViewModel.Abrv.Trim()) ||
+               editVehicleModelViewModel.VehicleMakeId < 0)
+            {
+                return BadRequest();
+            }
+
+            var modelToEdit = await _vehicleModelsService.GetVehicleModel(editVehicleModelViewModel.Id);
+
+            if (modelToEdit is null)
+            {
+                return NotFound();
+            }
+
             try
             {
                 await _vehicleModelsService.UpdateVehicleModel(editVehicleModelViewModel);
 
             }
-            catch (Exception e)
+            catch (Exception _)
             {
                 return NotFound("An error occurred. Check Id or make Id");
             }
-            
+
             return Ok();
         }
     }

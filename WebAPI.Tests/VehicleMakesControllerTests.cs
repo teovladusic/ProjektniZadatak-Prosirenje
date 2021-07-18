@@ -34,7 +34,6 @@ namespace WebAPI.Tests
         [Fact]
         public async Task Details_WithUnexistingMake_ReturnsNotFound()
         {
-            // arrange 
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             int itemId = 1;
             vehicleMakesServiceStub.Setup(service => service.GetVehicleMake(itemId))
@@ -44,17 +43,14 @@ namespace WebAPI.Tests
 
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
 
-            // act
             var result = await controller.Details(itemId);
 
-            // assert
             result.Should().BeOfType<NotFoundResult>();
         }
 
         [Fact]
         public async Task Details_WithExistingMake_ReturnsOk()
         {
-            // arrange 
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             int itemId = 1;
 
@@ -72,20 +68,16 @@ namespace WebAPI.Tests
 
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
 
-            // act
             var result = await controller.Details(itemId) as OkObjectResult;
 
-            // assert
             result.Value.Should().BeEquivalentTo(
                 expectedViewModel,
                 options => options.ComparingByMembers<VehicleMakeViewModel>());
-
         }
 
         [Fact]
         public async Task Details_WithoutId_ReturnsNotFound()
         {
-            // arrange 
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             int? itemId = null;
 
@@ -93,10 +85,8 @@ namespace WebAPI.Tests
 
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
 
-            // act
             var result = await controller.Details(itemId);
 
-            // assert
             result.Should().BeOfType<NotFoundResult>();
         }
 

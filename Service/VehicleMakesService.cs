@@ -29,19 +29,6 @@ namespace Service
             _logger = logger;
         }
 
-        public async Task<int> DeleteVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel)
-        {
-            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeViewModel);
-            _unitOfWork.VehicleMakes.Delete(vehicleMake);
-            return await _unitOfWork.Complete();
-        }
-
-        public async Task<IVehicleMakeViewModel> GetVehicleMake(int id)
-        {
-            var make = await _unitOfWork.VehicleMakes.GetById(id);
-            return _mapper.Map<VehicleMakeViewModel>(make);
-        }
-
         public async Task<PagedList<IVehicleMakeViewModel>> GetVehicleMakes(VehicleMakeFilterParams parameters)
         {
             var pagedMakes = await _unitOfWork.VehicleMakes.GetAll(parameters);
@@ -52,12 +39,25 @@ namespace Service
                 parameters.PagingParams.CurrentPage, parameters.PagingParams.PageSize);
         }
 
+        public async Task<IVehicleMakeViewModel> GetVehicleMake(int id)
+        {
+            var make = await _unitOfWork.VehicleMakes.GetById(id);
+            return _mapper.Map<VehicleMakeViewModel>(make);
+        }
+
         public async Task<VehicleMakeViewModel> InsertVehicleMake(ICreateVehicleMakeViewModel createVehicleMakeViewModel)
         {
             var vehicleMake = _mapper.Map<VehicleMake>(createVehicleMakeViewModel);
             var createdMake = _unitOfWork.VehicleMakes.Insert(vehicleMake);
             await _unitOfWork.Complete();
             return _mapper.Map<VehicleMakeViewModel>(createdMake);
+        }
+
+        public async Task<int> DeleteVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel)
+        {
+            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeViewModel);
+            _unitOfWork.VehicleMakes.Delete(vehicleMake);
+            return await _unitOfWork.Complete();
         }
 
         public async Task<int> UpdateVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel)

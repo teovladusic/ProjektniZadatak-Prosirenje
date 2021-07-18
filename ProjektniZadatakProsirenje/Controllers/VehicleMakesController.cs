@@ -62,6 +62,26 @@ namespace WebAPI.Controllers
             return Ok(vehicleMakeViewModel);
         }
 
+        //POST /VehicleMakes/Create
+        [HttpPost("Create/")]
+        public async Task<IActionResult> Create([Bind("Name,Abrv")] CreateVehicleMakeViewModel createVehicleMakeViewModel)
+        {
+            if (string.IsNullOrEmpty(createVehicleMakeViewModel.Name.Trim()) ||
+                string.IsNullOrEmpty(createVehicleMakeViewModel.Abrv.Trim()))
+            {
+                return BadRequest();
+            }
+
+            var response = await _vehicleMakesService.InsertVehicleMake(createVehicleMakeViewModel);
+
+            if (response is null)
+            {
+                return BadRequest();
+            }
+
+            return Created(response.Id.ToString(), response);
+        }
+
         //POST /VehicleMakes/Delete/{id}
         [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
@@ -81,26 +101,6 @@ namespace WebAPI.Controllers
             await _vehicleMakesService.DeleteVehicleMake(vehicleMakeViewModel);
 
             return Ok();
-        }
-
-        //POST /VehicleMakes/Create
-        [HttpPost("Create/")]
-        public async Task<IActionResult> Create([Bind("Name,Abrv")] CreateVehicleMakeViewModel createVehicleMakeViewModel)
-        {
-            if (string.IsNullOrEmpty(createVehicleMakeViewModel.Name.Trim()) ||
-                string.IsNullOrEmpty(createVehicleMakeViewModel.Abrv.Trim()))
-            {
-                return BadRequest();
-            }
-
-            var response = await _vehicleMakesService.InsertVehicleMake(createVehicleMakeViewModel);
-
-            if (response is null)
-            {
-                return BadRequest();
-            }
-
-            return Created(response.Id.ToString(), response);
         }
 
         [HttpPost("Edit/")]

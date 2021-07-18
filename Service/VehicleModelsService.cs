@@ -26,19 +26,6 @@ namespace Service
             _logger = logger;
         }
 
-        public async Task DeleteVehicleModel(IVehicleModelViewModel vehicleModelViewModel)
-        {
-            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
-            _unitOfWork.VehicleModels.Delete(vehicleModel);
-            await _unitOfWork.Complete();
-        }
-
-        public async Task<IVehicleModelViewModel> GetVehicleModel(int id)
-        {
-            var model = await _unitOfWork.VehicleModels.GetById(id);
-            return _mapper.Map<VehicleModelViewModel>(model);
-        }
-
         public async Task<PagedList<IVehicleModelViewModel>> GetVehicleModels(VehicleModelFilterParams parameters)
         {
             var pagedModels = await _unitOfWork.VehicleModels.GetAll(parameters);
@@ -49,10 +36,24 @@ namespace Service
                 parameters.PagingParams.CurrentPage, parameters.PagingParams.PageSize);
         }
 
-        public async Task InsertVehicleModel(ICreateVehicleModelViewModel createVehicleModelViewModel)
+        public async Task<IVehicleModelViewModel> GetVehicleModel(int id)
+        {
+            var model = await _unitOfWork.VehicleModels.GetById(id);
+            return _mapper.Map<VehicleModelViewModel>(model);
+        }
+
+        public async Task<VehicleModelViewModel> InsertVehicleModel(ICreateVehicleModelViewModel createVehicleModelViewModel)
         {
             var vehicleModel = _mapper.Map<VehicleModel>(createVehicleModelViewModel);
-            _unitOfWork.VehicleModels.Insert(vehicleModel);
+            var createdModel = _unitOfWork.VehicleModels.Insert(vehicleModel);
+            await _unitOfWork.Complete();
+            return _mapper.Map<VehicleModelViewModel>(createdModel);
+        }
+
+        public async Task DeleteVehicleModel(IVehicleModelViewModel vehicleModelViewModel)
+        {
+            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
+            _unitOfWork.VehicleModels.Delete(vehicleModel);
             await _unitOfWork.Complete();
         }
 
