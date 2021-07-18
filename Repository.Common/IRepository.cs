@@ -1,5 +1,6 @@
 ﻿using Common;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Repository.Common
     {
         Task<List<T>> GetAll();
         Task<T> GetById(object id);
-        void Insert(T entity);
+        T Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

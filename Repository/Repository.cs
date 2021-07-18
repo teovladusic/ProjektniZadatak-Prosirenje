@@ -2,6 +2,7 @@
 using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace Repository.Common
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly DbSet<T> _entities;
 
-        public Repository(ApplicationDbContext dbContext)
+        public Repository(IApplicationDbContext dbContext)
         {
             _context = dbContext;
             _entities = _context.Set<T>();
@@ -24,7 +25,7 @@ namespace Repository.Common
 
         public async Task<List<T>> GetAll()
         {
-            var entites = from v in _entities select v;
+            var entites = _entities.Where(x => true);
             return await entites.ToListAsync();
         }
 
@@ -40,9 +41,9 @@ namespace Repository.Common
         }
 
 
-        public void Insert(T entity)
+        public T Insert(T entity)
         {
-            _entities.Add(entity);
+            return _entities.Add(entity).Entity;
         }
 
 

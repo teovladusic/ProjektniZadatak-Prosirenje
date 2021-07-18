@@ -14,11 +14,11 @@ namespace Repository
 {
     public class VehicleModelsRepository : Repository<VehicleModel>, IVehicleModelsRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ISortHelper<VehicleModel> _sortHelper;
         private readonly ILogger<VehicleModelsRepository> _logger;
 
-        public VehicleModelsRepository(ApplicationDbContext context, ISortHelper<VehicleModel> sortHelper,
+        public VehicleModelsRepository(IApplicationDbContext context, ISortHelper<VehicleModel> sortHelper,
             ILogger<VehicleModelsRepository> logger)
             : base(context)
         {

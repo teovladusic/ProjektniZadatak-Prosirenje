@@ -15,10 +15,10 @@ namespace Repository
 {
     public class VehicleMakesRepository : Repository<VehicleMake>, IVehicleMakesRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ISortHelper<VehicleMake> _sortHelper;
 
-        public VehicleMakesRepository(ApplicationDbContext dbContext, ISortHelper<VehicleMake> sortHelper) 
+        public VehicleMakesRepository(IApplicationDbContext dbContext, ISortHelper<VehicleMake> sortHelper) 
             : base(dbContext)
         {
             _context = dbContext;

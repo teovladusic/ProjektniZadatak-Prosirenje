@@ -14,16 +14,16 @@ namespace Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         ISortHelper<VehicleMake> _vehicleMakeSortHelper;
         ISortHelper<VehicleModel> _vehicleModelSortHelper;
         ILogger<VehicleModelsRepository> _logger;
 
-        public UnitOfWork(ApplicationDbContext context, ISortHelper<VehicleMake> vehicleMakeSortHelper, IMapper mapper,
+        public UnitOfWork(IApplicationDbContext context, ISortHelper<VehicleMake> vehicleMakeSortHelper, IMapper mapper,
             ISortHelper<VehicleModel> vehicleModelSortHelper, ILogger<VehicleModelsRepository> logger)
         {
             _context = context;
-            _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            _context.SetNoQueryTrackingBehaviour();
             _vehicleMakeSortHelper = vehicleMakeSortHelper;
             _vehicleModelSortHelper = vehicleModelSortHelper;
             _logger = logger;

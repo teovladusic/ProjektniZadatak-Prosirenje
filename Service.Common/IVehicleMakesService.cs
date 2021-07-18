@@ -15,8 +15,8 @@ namespace Service.Common
     {
         Task<PagedList<IVehicleMakeViewModel>> GetVehicleMakes(VehicleMakeFilterParams parameters);
         Task<IVehicleMakeViewModel> GetVehicleMake(int id);
-        Task InsertVehicleMake(ICreateVehicleMakeViewModel vehicleMake);
-        Task UpdateVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel);
-        Task DeleteVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel);
+        Task<VehicleMakeViewModel> InsertVehicleMake(ICreateVehicleMakeViewModel vehicleMake);
+        Task<int> UpdateVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel);
+        Task<int> DeleteVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel);
     }
 }

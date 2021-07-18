@@ -90,3 +90,9 @@ C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Z.EntityFramework.Extensions.EFCore.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Model.Common.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Model.Common.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Autofac.Extras.Moq.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Castle.Core.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\MockQueryable.Core.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\MockQueryable.EntityFrameworkCore.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\MockQueryable.Moq.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\ProjektniZadatakProsirenje\bin\Debug\net5.0\Moq.dll

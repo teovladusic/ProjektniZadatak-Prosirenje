@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Model;
 using AutoMapper;
 using Project.Model;
+using Project.Model.Common;
 
 namespace WebAPI.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebAPI.Controllers
 
         //GET /VehicleMakes
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] VehicleMakeParams vehicleMakeParams)
+        public async Task<ActionResult<PagedList<IVehicleMakeViewModel>>> Index([FromQuery] VehicleMakeParams vehicleMakeParams)
         {
             var pagingParams = new PagingParams(vehicleMakeParams.PageNumber, vehicleMakeParams.PageSize);
             var sortParams = new SortParams(vehicleMakeParams.OrderBy);
@@ -39,7 +40,7 @@ namespace WebAPI.Controllers
 
             var makes = await _vehicleMakesService.GetVehicleMakes(parameters);
 
-            return Ok(makes);
+            return makes;
         }
 
         //GET /VehicleMakes/{id}
@@ -71,7 +72,7 @@ namespace WebAPI.Controllers
             }
 
             var vehicleMakeViewModel = await _vehicleMakesService.GetVehicleMake((int)id);
-            
+
             if (vehicleMakeViewModel == null)
             {
                 return NotFound();
@@ -86,14 +87,39 @@ namespace WebAPI.Controllers
         [HttpPost("Create/")]
         public async Task<IActionResult> Create([Bind("Name,Abrv")] CreateVehicleMakeViewModel createVehicleMakeViewModel)
         {
-            await _vehicleMakesService.InsertVehicleMake(createVehicleMakeViewModel);
+            if (string.IsNullOrEmpty(createVehicleMakeViewModel.Name.Trim()) ||
+                string.IsNullOrEmpty(createVehicleMakeViewModel.Abrv.Trim()))
+            {
+                return BadRequest();
+            }
 
-            return Ok();
+            var response = await _vehicleMakesService.InsertVehicleMake(createVehicleMakeViewModel);
+
+            if (response is null)
+            {
+                return BadRequest();
+            }
+
+            return Created(response.Id.ToString(), response);
         }
 
         [HttpPost("Edit/")]
         public async Task<IActionResult> Edit([Bind("Id,Name,Abrv")] VehicleMakeViewModel vehicleMakeViewModel)
         {
+            if (string.IsNullOrEmpty(vehicleMakeViewModel.Name.Trim()) ||
+                string.IsNullOrEmpty(vehicleMakeViewModel.Abrv.Trim()) ||
+                vehicleMakeViewModel.Id < 0)
+            {
+                return BadRequest();
+            }
+
+            var vehicleMake = await _vehicleMakesService.GetVehicleMake(vehicleMakeViewModel.Id);
+
+            if (vehicleMake is null)
+            {
+                return NotFound();
+            }
+
             await _vehicleMakesService.UpdateVehicleMake(vehicleMakeViewModel);
             return Ok();
         }
