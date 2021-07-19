@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ProjektniZadatakProsirenje\WebAPI.csproj" />
     <ProjectReference Include="..\Service.Common\Service.Common.csproj" />
+    <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
 </Project>

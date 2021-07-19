@@ -11,6 +11,7 @@
           "FluentAssertions": "5.10.3",
           "Microsoft.NET.Test.Sdk": "16.9.4",
           "Moq": "4.16.1",
+          "Service": "1.0.0",
           "Service.Common": "1.0.0",
           "WebAPI": "1.0.0",
           "coverlet.collector": "3.0.2",

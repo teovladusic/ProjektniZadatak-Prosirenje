@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Model;
 using Model.Common;
 using Repository.Common;
+using Service.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,18 +51,18 @@ namespace Service
             return _mapper.Map<VehicleModelViewModel>(createdModel);
         }
 
-        public async Task DeleteVehicleModel(IVehicleModelViewModel vehicleModelViewModel)
+        public async Task<int> DeleteVehicleModel(IVehicleModelViewModel vehicleModelViewModel)
         {
             var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
             _unitOfWork.VehicleModels.Delete(vehicleModel);
-            await _unitOfWork.Complete();
+            return await _unitOfWork.Complete();
         }
 
-        public async Task UpdateVehicleModel(IEditVehicleModelViewModel editVehicleModelViewModel)
+        public async Task<int> UpdateVehicleModel(IEditVehicleModelViewModel editVehicleModelViewModel)
         {
             var vehicleModel = _mapper.Map<VehicleModel>(editVehicleModelViewModel);
             _unitOfWork.VehicleModels.Update(vehicleModel);
-            await _unitOfWork.Complete();
+            return await _unitOfWork.Complete();
         }
     }
 }

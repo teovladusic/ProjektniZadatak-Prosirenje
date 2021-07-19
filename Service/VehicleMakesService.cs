@@ -33,7 +33,8 @@ namespace Service
         {
             var pagedMakes = await _unitOfWork.VehicleMakes.GetAll(parameters);
 
-            var vehicleMakeViewModels = _mapper.Map<List<VehicleMakeViewModel>>(pagedMakes).Cast<IVehicleMakeViewModel>().ToList();
+            var vehicleMakeViewModels = _mapper.Map<List<VehicleMakeViewModel>>(pagedMakes)
+                .Cast<IVehicleMakeViewModel>().ToList();
 
             return new PagedList<IVehicleMakeViewModel>(vehicleMakeViewModels, pagedMakes.TotalCount,
                 parameters.PagingParams.CurrentPage, parameters.PagingParams.PageSize);

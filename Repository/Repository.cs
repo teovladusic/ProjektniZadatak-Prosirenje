@@ -29,12 +29,6 @@ namespace Repository.Common
             return await entites.ToListAsync();
         }
 
-        public void Delete(T entity)
-        {
-            _entities.Remove(entity);
-        }
-
-
         public async Task<T> GetById(object id)
         {
             return await _entities.FindAsync(id);
@@ -44,6 +38,11 @@ namespace Repository.Common
         public T Insert(T entity)
         {
             return _entities.Add(entity).Entity;
+        }
+
+        public void Delete(T entity)
+        {
+            _entities.Remove(entity);
         }
 
 
