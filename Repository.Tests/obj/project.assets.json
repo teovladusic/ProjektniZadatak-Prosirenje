@@ -2799,6 +2799,44 @@
         "runtime": {
           "bin/placeholder/Repository.Common.dll": {}
         }
+      },
+      "Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Autofac.Extras.Moq": "6.0.0",
+          "MockQueryable.Moq": "5.0.1",
+          "Newtonsoft.Json": "13.0.1",
+          "Repository": "1.0.0",
+          "Repository.Common": "1.0.0",
+          "Service.Common": "1.0.0",
+          "System.Linq.Dynamic.Core": "1.2.10"
+        },
+        "compile": {
+          "bin/placeholder/Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Service.dll": {}
+        }
+      },
+      "Service.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Autofac.Extras.Moq": "6.0.0",
+          "Common": "1.0.0",
+          "DAL": "1.0.0",
+          "MockQueryable.Moq": "5.0.1",
+          "Model": "1.0.0",
+          "Newtonsoft.Json": "13.0.1",
+          "System.Linq.Dynamic.Core": "1.2.10"
+        },
+        "compile": {
+          "bin/placeholder/Service.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Service.Common.dll": {}
+        }
       }
     }
   },
@@ -9264,6 +9302,16 @@
       "type": "project",
       "path": "../Repository.Common/Repository.Common.csproj",
       "msbuildProject": "../Repository.Common/Repository.Common.csproj"
+    },
+    "Service/1.0.0": {
+      "type": "project",
+      "path": "../Service/Service.csproj",
+      "msbuildProject": "../Service/Service.csproj"
+    },
+    "Service.Common/1.0.0": {
+      "type": "project",
+      "path": "../Service.Common/Service.Common.csproj",
+      "msbuildProject": "../Service.Common/Service.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -9275,6 +9323,8 @@
       "Moq >= 4.16.1",
       "Newtonsoft.Json >= 13.0.1",
       "Repository >= 1.0.0",
+      "Service >= 1.0.0",
+      "Service.Common >= 1.0.0",
       "System.Linq.Dynamic.Core >= 1.2.10",
       "coverlet.collector >= 3.0.2",
       "xunit >= 2.4.1",
@@ -9315,6 +9365,12 @@
           "projectReferences": {
             "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj": {
               "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj"
+            },
+            "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj": {
+              "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj"
+            },
+            "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\Service.csproj": {
+              "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\Service.csproj"
             }
           }
         }

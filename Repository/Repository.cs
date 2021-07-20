@@ -23,7 +23,7 @@ namespace Repository.Common
             _entities = _context.Set<T>();
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<List<T>> GetAll(IFilterParams filterParams)
         {
             var entites = _entities.Where(x => true);
             return await entites.ToListAsync();

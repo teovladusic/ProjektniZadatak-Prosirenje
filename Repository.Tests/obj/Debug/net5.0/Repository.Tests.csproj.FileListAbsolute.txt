@@ -177,3 +177,7 @@ C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\net5.0\MockQueryable.EntityFrameworkCore.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\net5.0\MockQueryable.Moq.dll
 C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\net5.0\FluentAssertions.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\net5.0\Service.Common.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\net5.0\Service.dll
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\net5.0\Service.Common.pdb
+C:\Users\Teo\source\repos\ProjektniZadatakProsirenje\Repository.Tests\bin\Debug\net5.0\Service.pdb
