@@ -5868,25 +5868,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Teo\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\teovl\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj",
+      "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj",
       "projectName": "Common",
-      "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj",
-      "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\obj\\",
+      "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj",
+      "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"

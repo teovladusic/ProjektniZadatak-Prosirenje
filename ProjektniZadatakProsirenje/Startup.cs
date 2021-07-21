@@ -75,7 +75,7 @@ namespace ProjektniZadatakProsirenje
                 opt.EnableSensitiveDataLogging();
 
                 return new ApplicationDbContext(opt.Options);
-            }).As<IApplicationDbContext>().InstancePerLifetimeScope();
+            }).AsSelf().InstancePerLifetimeScope();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -14,10 +14,10 @@ namespace Repository.Common
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _entities;
 
-        public Repository(IApplicationDbContext dbContext)
+        public Repository(ApplicationDbContext dbContext)
         {
             _context = dbContext;
             _entities = _context.Set<T>();

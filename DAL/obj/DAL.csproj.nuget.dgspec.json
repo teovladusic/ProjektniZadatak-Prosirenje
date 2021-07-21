@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj": {}
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\Project.Common\Common.csproj" />
+    <ProjectReference Include="..\Project.Model.Common\Model.Common.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Service.Common\Service.Common.csproj" />
     <ProjectReference Include="..\Service\Service.csproj" />

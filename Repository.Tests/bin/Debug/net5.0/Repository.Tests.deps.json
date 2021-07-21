@@ -9,9 +9,12 @@
       "Repository.Tests/1.0.0": {
         "dependencies": {
           "Autofac.Extras.Moq": "6.0.0",
+          "Common": "1.0.0",
+          "DAL": "1.0.0",
           "FluentAssertions": "5.10.3",
           "Microsoft.NET.Test.Sdk": "16.9.4",
           "MockQueryable.Moq": "5.0.1",
+          "Model.Common": "1.0.0",
           "Moq": "4.16.1",
           "Newtonsoft.Json": "13.0.1",
           "Repository": "1.0.0",

@@ -1,9 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Teo\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Teo\\.nuget\\packages",
-      "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
+      "C:\\Users\\teovl\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\teovl\\.nuget\\packages"
     ]
   }
 }

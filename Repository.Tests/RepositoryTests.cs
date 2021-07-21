@@ -15,28 +15,18 @@ using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using Project.Model;
 using Common;
+using Model;
 
 namespace Repository.Tests
 {
     public class RepositoryTests
     {
+
+        //currently method GetAll is not used and cannot
+        //be tested because test relays on other methods calling this one.
         [Fact]
-        public async Task GetAll_ReturnsAllItems()
+        public void GetAll_ReturnsAllItems()
         {
-            var repositoryStub = new Mock<IVehicleMakesRepository>();
-
-            var listToReturn = new List<VehicleMake> { new VehicleMake() };
-
-            /*var vehicleMakeFilterParams = new VehicleMakeFilterParams();
-
-            repositoryStub.Setup(repo => repo.GetAll())
-                .ReturnsAsync(listToReturn);
-
-            var unitOfWorkStub = new Mock<IUnitOfWork>();
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes)
-                .Returns(repositoryStub.Object).Verifiable();
-
-            var mapperStub = new Mock<IMapper>();*/
         }
 
         [Fact]
@@ -103,6 +93,103 @@ namespace Repository.Tests
             actual.Should().BeEquivalentTo(
                 vehicleMakeViewModel,
                 options => options.ComparingByMembers<VehicleMakeViewModel>());
+        }
+
+        [Fact]
+        public async Task Insert_WithValidEntity_ReturnsInsertedItem()
+        {
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
+
+            var createVehicleMakeViewModel = new CreateVehicleMakeViewModel();
+            var vehicleMakeToInsert = new VehicleMake();
+            var vehicleMakeViewModel = new VehicleMakeViewModel();
+
+            repositoryStub.Setup(repo => repo.Insert(vehicleMakeToInsert))
+                .Returns(vehicleMakeToInsert);
+
+            var unitOfWorkStub = new Mock<IUnitOfWork>();
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes)
+                .Returns(repositoryStub.Object).Verifiable();
+
+            var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(createVehicleMakeViewModel))
+                .Returns(vehicleMakeToInsert);
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(vehicleMakeToInsert))
+                .Returns(vehicleMakeViewModel);
+
+            var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+
+            var service = new VehicleMakesService(unitOfWorkStub.Object,
+                mapperStub.Object, loggerStub.Object);
+
+            var result = await service.InsertVehicleMake(createVehicleMakeViewModel);
+
+            result.Should().BeEquivalentTo(
+                vehicleMakeViewModel,
+                options => options.ComparingByMembers<VehicleMakeViewModel>());
+        }
+
+        [Fact]
+        public async Task Delete_WithValidEntity_DeletesItemAndReturns1()
+        {
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
+
+            var vehicleMakeToDelete = new VehicleMake();
+            var vehicleMakeViewModel = new VehicleMakeViewModel();
+
+            repositoryStub.Setup(repo => repo.Delete(vehicleMakeToDelete));
+
+            var unitOfWorkStub = new Mock<IUnitOfWork>();
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes)
+                .Returns(repositoryStub.Object).Verifiable();
+
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
+                .ReturnsAsync(1);
+
+            var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(vehicleMakeViewModel))
+                .Returns(vehicleMakeToDelete);
+
+            var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+
+            var service = new VehicleMakesService(unitOfWorkStub.Object,
+                mapperStub.Object, loggerStub.Object);
+
+            var result = await service.DeleteVehicleMake(vehicleMakeViewModel);
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public async Task Update_WithValidEntity_UpdatesItemAndReturns1()
+        {
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
+
+            var vehicleMakeToUpdate = new VehicleMake();
+            var vehicleMakeViewModel = new VehicleMakeViewModel();
+
+            repositoryStub.Setup(repo => repo.Update(vehicleMakeToUpdate));
+
+            var unitOfWorkStub = new Mock<IUnitOfWork>();
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes)
+                .Returns(repositoryStub.Object).Verifiable();
+
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
+                .ReturnsAsync(1);
+
+            var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(vehicleMakeViewModel))
+                .Returns(vehicleMakeToUpdate);
+
+            var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+
+            var service = new VehicleMakesService(unitOfWorkStub.Object,
+                mapperStub.Object, loggerStub.Object);
+
+            var result = await service.UpdateVehicleMake(vehicleMakeViewModel);
+
+            result.Should().Be(1);
         }
     }
 }

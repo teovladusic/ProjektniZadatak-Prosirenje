@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Tests\\Service.Tests.csproj": {}
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Tests\\Service.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -108,22 +104,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj",
         "projectName": "Common",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -192,22 +184,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model.Common\\Model.Common.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model.Common\\Model.Common.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj",
         "projectName": "Model.Common",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model.Common\\Model.Common.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model.Common\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -268,22 +256,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\Model.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\Model.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\Model.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -296,11 +280,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model.Common\\Model.Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model.Common\\Model.Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj"
               }
             }
           }
@@ -355,22 +339,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj",
         "projectName": "Repository.Common",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -383,14 +363,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\Model.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\Model.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj"
               }
             }
           }
@@ -445,22 +425,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -473,14 +449,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj"
               }
             }
           }
@@ -541,22 +517,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\Service.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\Service.Common.csproj",
         "projectName": "Service.Common",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\Service.Common.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -569,14 +541,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\DAL\\DAL.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Common\\Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\Model.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Project.Model\\Model.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj"
               }
             }
           }
@@ -627,22 +599,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Tests\\Service.Tests.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Tests\\Service.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Tests\\Service.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Tests\\Service.Tests.csproj",
         "projectName": "Service.Tests",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Tests\\Service.Tests.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Tests\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Tests\\Service.Tests.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Tests\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -655,14 +623,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\Service.Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\Service.Common.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\Service.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\Service.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service\\Service.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service\\Service.csproj"
               }
             }
           }
@@ -721,22 +689,18 @@
         }
       }
     },
-    "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\Service.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\Service.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\Service.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service\\obj\\",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -749,14 +713,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository.Common\\Repository.Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository.Common\\Repository.Common.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Repository\\Repository.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository\\Repository.csproj"
               },
-              "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj": {
-                "projectPath": "C:\\Users\\Teo\\source\\repos\\ProjektniZadatakProsirenje\\Service.Common\\Service.Common.csproj"
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\Service.Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Service.Common\\Service.Common.csproj"
               }
             }
           }
