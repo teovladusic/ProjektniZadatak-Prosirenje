@@ -11,6 +11,7 @@ namespace Repository.Common
 {
     public interface IVehicleMakesRepository : IRepository<VehicleMake>
     {
-        Task<PagedList<VehicleMake>> GetAll(VehicleMakeFilterParams parameters);
+        Task<IPagedList<VehicleMake>> GetAll(ISortParams sortParams, IPagingParams pagingParams,
+            IVehicleMakeFilterParams vehicleMakeFilterParams);
     }
 }

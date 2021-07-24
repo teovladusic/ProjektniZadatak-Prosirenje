@@ -10,7 +10,7 @@ namespace Repository.Common
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task<List<T>> GetAll(IFilterParams filterParams);
+        Task<List<T>> GetAll();
         Task<T> GetById(object id);
         T Insert(T entity);
         void Update(T entity);

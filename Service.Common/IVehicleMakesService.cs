@@ -13,10 +13,11 @@ namespace Service.Common
 {
     public interface IVehicleMakesService
     {
-        Task<PagedList<IVehicleMakeViewModel>> GetVehicleMakes(VehicleMakeFilterParams parameters);
-        Task<IVehicleMakeViewModel> GetVehicleMake(int id);
-        Task<VehicleMakeViewModel> InsertVehicleMake(ICreateVehicleMakeViewModel vehicleMake);
-        Task<int> DeleteVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel);
-        Task<int> UpdateVehicleMake(IVehicleMakeViewModel vehicleMakeViewModel);
+        Task<IPagedList<VehicleMake>> GetVehicleMakes(ISortParams sortParams, IPagingParams pagingParams,
+            IVehicleMakeFilterParams vehicleMakeFilterParams);
+        Task<VehicleMake> GetVehicleMake(int id);
+        Task<VehicleMake> InsertVehicleMake(VehicleMake vehicleMake);
+        Task<int> DeleteVehicleMake(VehicleMake vehicleMakeViewModel);
+        Task<int> UpdateVehicleMake(VehicleMake vehicleMakeViewModel);
     }
 }

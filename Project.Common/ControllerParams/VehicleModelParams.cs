@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    //all vehicleMake parameters
-    public class VehicleMakeParams : Params
+    //model for getting parameters in controller
+    public class VehicleModelParams : Params
     {
         public string SearchQuery { get; set; }
+        public string MakeName { get; set; }
     }
 }

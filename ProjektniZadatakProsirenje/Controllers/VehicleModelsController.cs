@@ -1,4 +1,6 @@
-﻿using Common;
+﻿using AutoMapper;
+using Common;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Model;
@@ -17,11 +19,14 @@ namespace WebAPI.Controllers
     {
         private readonly IVehicleModelsService _vehicleModelsService;
         private readonly ILogger<VehicleModelsController> _logger;
+        private readonly IMapper _mapper;
 
-        public VehicleModelsController(IVehicleModelsService vehicleModelsService, ILogger<VehicleModelsController> logger)
+        public VehicleModelsController(IVehicleModelsService vehicleModelsService, ILogger<VehicleModelsController> logger,
+            IMapper mapper)
         {
             _vehicleModelsService = vehicleModelsService;
             _logger = logger;
+            _mapper = mapper;
         }
 
 
@@ -29,13 +34,12 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] VehicleModelParams vehicleModelParams)
         {
-            var pagingParams = new PagingParams(vehicleModelParams.PageNumber, vehicleModelParams.PageSize);
-            var sortParams = new SortParams(vehicleModelParams.OrderBy);
-
-            var parameters = new VehicleModelFilterParams(pagingParams, sortParams, vehicleModelParams.SearchQuery,
+            var sortParams = CommonFactory.CreateSortParams(vehicleModelParams.OrderBy);
+            var pagingParams = CommonFactory.CreatePagingParams(vehicleModelParams.PageNumber, vehicleModelParams.PageSize);
+            var vehicleModelFilterParams = CommonFactory.CreateVehicleModelFilterParams(vehicleModelParams.SearchQuery,
                 vehicleModelParams.MakeName);
 
-            var models = await _vehicleModelsService.GetVehicleModels(parameters);
+            var models = await _vehicleModelsService.GetVehicleModels(sortParams, pagingParams, vehicleModelFilterParams);
 
             return Ok(models);
         }
@@ -70,9 +74,11 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
+            var vehicleModelToInsert = _mapper.Map<VehicleModel>(createVehicleModelViewModel);
+
             try
             {
-                var response = await _vehicleModelsService.InsertVehicleModel(createVehicleModelViewModel);
+                var response = await _vehicleModelsService.InsertVehicleModel(vehicleModelToInsert);
                 if (response is null)
                 {
                     return BadRequest();
@@ -124,9 +130,11 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
+            var editedModel = _mapper.Map<VehicleModel>(editVehicleModelViewModel);
+
             try
             {
-                await _vehicleModelsService.UpdateVehicleModel(editVehicleModelViewModel);
+                await _vehicleModelsService.UpdateVehicleModel(editedModel);
 
             }
             catch (Exception _)

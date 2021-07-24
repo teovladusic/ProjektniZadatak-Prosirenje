@@ -27,40 +27,35 @@ namespace Service
             _logger = logger;
         }
 
-        public async Task<PagedList<IVehicleModelViewModel>> GetVehicleModels(VehicleModelFilterParams parameters)
+        public async Task<IPagedList<VehicleModel>> GetVehicleModels(ISortParams sortParams, IPagingParams pagingParams,
+            IVehicleModelFilterParams vehicleModelFilterParams)
         {
-            var pagedModels = await _unitOfWork.VehicleModels.GetAll(parameters);
+            var pagedModels = await _unitOfWork.VehicleModels.GetAll(sortParams, pagingParams, vehicleModelFilterParams);
 
-            var vehicleModelViewModels = _mapper.Map<List<VehicleModelViewModel>>(pagedModels).Cast<IVehicleModelViewModel>().ToList();
-
-            return new PagedList<IVehicleModelViewModel>(vehicleModelViewModels, pagedModels.TotalCount,
-                parameters.PagingParams.CurrentPage, parameters.PagingParams.PageSize);
+            return pagedModels;
         }
 
-        public async Task<IVehicleModelViewModel> GetVehicleModel(int id)
+        public async Task<VehicleModel> GetVehicleModel(int id)
         {
             var model = await _unitOfWork.VehicleModels.GetById(id);
-            return _mapper.Map<VehicleModelViewModel>(model);
+            return model;
         }
 
-        public async Task<VehicleModelViewModel> InsertVehicleModel(ICreateVehicleModelViewModel createVehicleModelViewModel)
+        public async Task<VehicleModel> InsertVehicleModel(VehicleModel vehicleModel)
         {
-            var vehicleModel = _mapper.Map<VehicleModel>(createVehicleModelViewModel);
             var createdModel = _unitOfWork.VehicleModels.Insert(vehicleModel);
             await _unitOfWork.Complete();
-            return _mapper.Map<VehicleModelViewModel>(createdModel);
+            return createdModel;
         }
 
-        public async Task<int> DeleteVehicleModel(IVehicleModelViewModel vehicleModelViewModel)
+        public async Task<int> DeleteVehicleModel(VehicleModel vehicleModel)
         {
-            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
             _unitOfWork.VehicleModels.Delete(vehicleModel);
             return await _unitOfWork.Complete();
         }
 
-        public async Task<int> UpdateVehicleModel(IEditVehicleModelViewModel editVehicleModelViewModel)
+        public async Task<int> UpdateVehicleModel(VehicleModel vehicleModel)
         {
-            var vehicleModel = _mapper.Map<VehicleModel>(editVehicleModelViewModel);
             _unitOfWork.VehicleModels.Update(vehicleModel);
             return await _unitOfWork.Complete();
         }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CTat4iVkPssUwn+AgTwgmloWIMZqitAYnQiiNkYKJk41pdkJvzOqCE0/tw1gR/hjasu3FlRdJl8i6MaqNMS6Lg==",
+  "dgSpecHash": "oJw0EjlISy5+1c4Lk7ie1JtAOmDszLyv45h38Y6UN2xBcZspckUrIb4cnskwNgc/s34euM1+/lIFZmoWrIWmtg==",
   "success": true,
   "projectFilePath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj",
   "expectedPackageFiles": [
@@ -70,7 +70,7 @@
     "C:\\Users\\teovl\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
-    "C:\\Users\\teovl\\.nuget\\packages\\system.linq.dynamic.core\\1.2.10\\system.linq.dynamic.core.1.2.10.nupkg.sha512",
+    "C:\\Users\\teovl\\.nuget\\packages\\system.linq.dynamic.core\\1.2.11\\system.linq.dynamic.core.1.2.11.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.linq.queryable\\4.3.0\\system.linq.queryable.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.net.http\\4.3.0\\system.net.http.4.3.0.nupkg.sha512",

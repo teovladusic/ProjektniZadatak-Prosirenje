@@ -82,7 +82,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -162,7 +162,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -234,7 +234,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -317,7 +317,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -433,7 +433,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -522,7 +522,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -610,11 +610,11 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             },
             "Z.EntityFramework.Extensions.EFCore": {
               "target": "Package",
-              "version": "[5.2.3, )"
+              "version": "[5.2.4, )"
             }
           },
           "imports": [
@@ -696,7 +696,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -778,7 +778,7 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.10, )"
+              "version": "[1.2.11, )"
             }
           },
           "imports": [
@@ -852,7 +852,7 @@
             },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[16.9.4, )"
+              "version": "[16.10.0, )"
             },
             "Moq": {
               "target": "Package",
@@ -862,7 +862,7 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.0.2, )"
+              "version": "[3.1.0, )"
             },
             "xunit": {
               "target": "Package",

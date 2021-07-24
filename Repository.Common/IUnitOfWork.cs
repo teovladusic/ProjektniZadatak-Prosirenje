@@ -12,5 +12,6 @@ namespace Repository.Common
         IVehicleMakesRepository VehicleMakes { get; }
         IVehicleModelsRepository VehicleModels { get; }
         Task<int> Complete();
+        Task<T> AddAsync<T>(T entity) where T : BaseEntity;
     }
 }

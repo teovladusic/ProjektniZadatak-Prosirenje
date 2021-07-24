@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2D4yKDtDimVApK8E54P+Dr67f4+RI+bdFyb+4d+FDWkg52AoQfObh+0GSz0hp0Y8m8M1B8CaAXJ/7FmEC4UYRg==",
+  "dgSpecHash": "Pn0iwOvXG57J421p8fu2NTwOmDnoAuaNPfvqB+k6dgNFYL99EQu2o4HpeEA9ZffansrNdF3znh1ridGdr8Vzfw==",
   "success": true,
   "projectFilePath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Repository\\Repository.csproj",
   "expectedPackageFiles": [
@@ -98,7 +98,7 @@
     "C:\\Users\\teovl\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
-    "C:\\Users\\teovl\\.nuget\\packages\\system.linq.dynamic.core\\1.2.10\\system.linq.dynamic.core.1.2.10.nupkg.sha512",
+    "C:\\Users\\teovl\\.nuget\\packages\\system.linq.dynamic.core\\1.2.11\\system.linq.dynamic.core.1.2.11.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.linq.queryable\\4.3.0\\system.linq.queryable.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.net.http\\4.3.0\\system.net.http.4.3.0.nupkg.sha512",
@@ -151,7 +151,7 @@
     "C:\\Users\\teovl\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\teovl\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\teovl\\.nuget\\packages\\z.entityframework.extensions.efcore\\5.2.3\\z.entityframework.extensions.efcore.5.2.3.nupkg.sha512"
+    "C:\\Users\\teovl\\.nuget\\packages\\z.entityframework.extensions.efcore\\5.2.4\\z.entityframework.extensions.efcore.5.2.4.nupkg.sha512"
   ],
   "logs": []
 }

@@ -19,6 +19,7 @@ using FluentAssertions;
 using Common;
 using Model;
 using Xunit.Abstractions;
+using AutoMapper;
 
 namespace WebAPI.Tests
 {
@@ -32,16 +33,58 @@ namespace WebAPI.Tests
         }
 
         [Fact]
+        public async Task Index_WithValidParams_ReturnsAllMakes()
+        {
+            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
+
+            var parameters = new VehicleMakeParams();
+
+            var pagingParams = CommonFactory.CreatePagingParams(parameters.PageNumber, parameters.PageSize);
+            var sortParams = CommonFactory.CreateSortParams(parameters.OrderBy);
+            var filterParams = CommonFactory.CreateVehicleMakeFilterParams(parameters.SearchQuery);
+
+            var listToReturn = new List<VehicleMake> { new VehicleMake { Name = "name" } };
+            var pagedListToReturn = new PagedList<VehicleMake>(listToReturn, listToReturn.Count,
+                pagingParams.CurrentPage, pagingParams.PageSize);
+
+            var listOfViewModels = new List<VehicleMakeViewModel> { new VehicleMakeViewModel { Name = "name" } };
+            var pagedListOfViewModels = new PagedList<VehicleMakeViewModel>(listOfViewModels, listOfViewModels.Count,
+                pagingParams.CurrentPage, pagingParams.PageSize);
+
+            vehicleMakesServiceStub.Setup(x => x.GetVehicleMakes(It.IsAny<ISortParams>(), It.IsAny<PagingParams>(), 
+                It.IsAny<IVehicleMakeFilterParams>()))
+                .ReturnsAsync(pagedListToReturn);
+
+            var mapperStub = new Mock<IMapper>();
+
+            mapperStub.Setup(mapper => mapper.Map<List<VehicleMakeViewModel>>(It.IsAny<IPagedList<VehicleMake>>()))
+                .Returns(listOfViewModels);
+
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
+
+            var result = await controller.Index(parameters) as OkObjectResult;
+
+            result.Value.Should().BeEquivalentTo(
+                pagedListOfViewModels,
+                options => options.ComparingByMembers<VehicleMakeViewModel>());
+        }
+
+        [Fact]
         public async Task Details_WithUnexistingMake_ReturnsNotFound()
         {
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             int itemId = 1;
             vehicleMakesServiceStub.Setup(service => service.GetVehicleMake(itemId))
-                .ReturnsAsync((IVehicleMakeViewModel)null);
+                .ReturnsAsync((VehicleMake)null);
 
             var loggerStub = new Mock<ILogger<VehicleMakesController>>();
+            var mapperStub = new Mock<IMapper>();
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Details(itemId);
 
@@ -61,12 +104,16 @@ namespace WebAPI.Tests
                 Abrv = "abrv"
             };
 
+            var vehicleMake = new VehicleMake();
+
             vehicleMakesServiceStub.Setup(service => service.GetVehicleMake(itemId))
-                .ReturnsAsync(expectedViewModel);
+                .ReturnsAsync(vehicleMake);
 
             var loggerStub = new Mock<ILogger<VehicleMakesController>>();
+            var mapperStub = new Mock<IMapper>();
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Details(itemId) as OkObjectResult;
 
@@ -83,39 +130,14 @@ namespace WebAPI.Tests
 
             var loggerStub = new Mock<ILogger<VehicleMakesController>>();
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            var mapperStub = new Mock<IMapper>();
+
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Details(itemId);
 
             result.Should().BeOfType<NotFoundResult>();
-        }
-
-        [Fact]
-        public async Task Index_WithValidParams_ReturnsAllMakes()
-        {
-            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
-
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
-            var parameters = new VehicleMakeParams();
-            var list = new List<IVehicleMakeViewModel> { new VehicleMakeViewModel { Name = "name" } };
-            var pagingParams = new PagingParams(parameters.PageNumber, parameters.PageSize);
-            var sortParams = new SortParams(parameters.OrderBy);
-            var filterParams = new VehicleMakeFilterParams(sortParams, pagingParams, parameters.SearchQuery);
-
-            var expectedResult = new PagedList<IVehicleMakeViewModel>(list, 1,
-                filterParams.PagingParams.CurrentPage, filterParams.PagingParams.PageSize);
-
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMakes(It.IsAny<VehicleMakeFilterParams>()))
-                .ReturnsAsync(expectedResult);
-
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
-
-            var result = await controller.Index(parameters);
-
-            result.Value.Should().BeEquivalentTo(
-                expectedResult,
-                options => options.ComparingByMembers<PagedList<IVehicleMakeViewModel>>());
         }
 
         [Fact]
@@ -140,10 +162,15 @@ namespace WebAPI.Tests
                 Id = id
             };
 
-            vehicleMakesServiceStub.Setup(x => x.InsertVehicleMake(createVehicleMakeViewModel))
-                .ReturnsAsync(vehicleMakeViewModel);
+            var vehicleMake = new VehicleMake();
+            var insertedVehicleMake = new VehicleMake { Id = 1 };
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            vehicleMakesServiceStub.Setup(x => x.InsertVehicleMake(vehicleMake))
+                .ReturnsAsync(insertedVehicleMake);
+
+            var mapperStub = new Mock<IMapper>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Create(createVehicleMakeViewModel) as CreatedResult;
 
@@ -171,10 +198,14 @@ namespace WebAPI.Tests
                 Abrv = Abrv
             };
 
-            vehicleMakesServiceStub.Setup(x => x.InsertVehicleMake(createVehicleMakeViewModel))
-                .ReturnsAsync((VehicleMakeViewModel)null);
+            var vehicleMake = new VehicleMake();
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            vehicleMakesServiceStub.Setup(x => x.InsertVehicleMake(vehicleMake))
+                .ReturnsAsync((VehicleMake)null);
+
+            var mapperStub = new Mock<IMapper>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Create(createVehicleMakeViewModel);
 
@@ -197,10 +228,14 @@ namespace WebAPI.Tests
                 Id = id
             };
 
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
-                .ReturnsAsync(vehicleMakeViewModel);
+            var vehicleMake = new VehicleMake();
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
+                .ReturnsAsync(vehicleMake);
+
+            var mapperStub = new Mock<IMapper>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Delete(id);
 
@@ -216,7 +251,9 @@ namespace WebAPI.Tests
 
             int? id = null;
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            var mapperStub = new Mock<IMapper>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object, 
+                mapperStub.Object);
 
             var result = await controller.Delete(id);
 
@@ -232,10 +269,12 @@ namespace WebAPI.Tests
 
             int id = new Random().Next();
 
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(It.IsAny<int>()))
-                .ReturnsAsync((VehicleMakeViewModel)null);
+            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
+                .ReturnsAsync((VehicleMake)null);
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            var mapperStub = new Mock<IMapper>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Delete(id);
 
@@ -258,10 +297,12 @@ namespace WebAPI.Tests
                 Id = id
             };
 
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(It.IsAny<int>()))
-                .ReturnsAsync((VehicleMakeViewModel)null);
+            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
+                .ReturnsAsync((VehicleMake)null);
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            var mapperStub = new Mock<IMapper>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Edit(editedMake);
 
@@ -289,7 +330,10 @@ namespace WebAPI.Tests
                 Id = id
             };
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            var mapperStub = new Mock<IMapper>();
+
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Edit(makeToEdit);
 
@@ -319,10 +363,14 @@ namespace WebAPI.Tests
                 Id = id
             };
 
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(It.IsAny<int>()))
-                .ReturnsAsync(existingMake);
+            var vehicleMake = new VehicleMake();
 
-            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object);
+            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
+                .ReturnsAsync(vehicleMake);
+
+            var mapperStub = new Mock<IMapper>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
 
             var result = await controller.Edit(editedMake);
 

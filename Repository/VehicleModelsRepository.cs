@@ -27,28 +27,29 @@ namespace Repository
             _logger = logger;
         }
 
-        public async Task<PagedList<VehicleModel>> GetAll(VehicleModelFilterParams parameters)
+        public async Task<IPagedList<VehicleModel>> GetAll(ISortParams sortParams, IPagingParams pagingParams,
+            IVehicleModelFilterParams vehicleModelFilterParams)
         {
             var vehicleModels = _context.VehicleModels.Include(m => m.VehicleMake).AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
+            if (!string.IsNullOrWhiteSpace(vehicleModelFilterParams.SearchQuery))
             {
-                vehicleModels = _context.VehicleModels.Where(model => model.Name.Contains(parameters.SearchQuery)
-            || model.Abrv.Contains(parameters.SearchQuery));
+                vehicleModels = _context.VehicleModels.Where(model => model.Name.Contains(vehicleModelFilterParams.SearchQuery)
+            || model.Abrv.Contains(vehicleModelFilterParams.SearchQuery)).Include(m => m.VehicleMake);
             }
 
-            if (!string.IsNullOrEmpty(parameters.MakeName))
+            if (!string.IsNullOrEmpty(vehicleModelFilterParams.MakeName))
             {
-                var make = _context.VehicleMakes.Where(make => make.Name == parameters.MakeName).FirstOrDefault();
-                vehicleModels = vehicleModels.Where(model => model.VehicleMakeId == make.Id);
+                var make = _context.VehicleMakes.Where(make => make.Name == vehicleModelFilterParams.MakeName).FirstOrDefault();
+                vehicleModels = vehicleModels.Where(model => model.VehicleMakeId == make.Id).Include(m => m.VehicleMake);
             }
 
-            var sortedModels = _sortHelper.ApplySort(vehicleModels, parameters.SortParams.OrderBy);
+            var sortedModels = _sortHelper.ApplySort(vehicleModels, sortParams.OrderBy);
 
-            return await PagedList<VehicleModel>.ToPagedList(
+            return await IPagedList<VehicleModel>.ToPagedList(
                 sortedModels,
-                parameters.PagingParams.CurrentPage,
-                parameters.PagingParams.PageSize,
+                pagingParams.CurrentPage,
+                pagingParams.PageSize,
                 sortedModels.Count());
         }
 

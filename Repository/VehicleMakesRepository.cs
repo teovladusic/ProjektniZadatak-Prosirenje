@@ -17,30 +17,36 @@ namespace Repository
     {
         private readonly ApplicationDbContext _context;
         private readonly ISortHelper<VehicleMake> _sortHelper;
+        private DbSet<VehicleMake> _entities;
 
-        public VehicleMakesRepository(ApplicationDbContext dbContext, ISortHelper<VehicleMake> sortHelper) 
+        public VehicleMakesRepository(ApplicationDbContext dbContext, ISortHelper<VehicleMake> sortHelper)
             : base(dbContext)
         {
             _context = dbContext;
             _sortHelper = sortHelper;
         }
 
-        public async Task<PagedList<VehicleMake>> GetAll(VehicleMakeFilterParams parameters)
+        public async Task<IPagedList<VehicleMake>> GetAll(ISortParams sortParams, IPagingParams pagingParams,
+            IVehicleMakeFilterParams vehicleMakeFilterParams)
         {
-            var vehicleMakes = _context.VehicleMakes.AsQueryable();
+            IQueryable<VehicleMake> vehicleMakes;
 
-            if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
+            if (!string.IsNullOrWhiteSpace(vehicleMakeFilterParams.SearchQuery))
             {
-                vehicleMakes = _context.VehicleMakes.Where(make => make.Name.Contains(parameters.SearchQuery)
-            || make.Abrv.Contains(parameters.SearchQuery));
+                vehicleMakes = _context.VehicleMakes.Where(make => make.Name.Contains(vehicleMakeFilterParams.SearchQuery)
+            || make.Abrv.Contains(vehicleMakeFilterParams.SearchQuery));
+            }
+            else
+            {
+                vehicleMakes = _context.VehicleMakes.AsQueryable();
             }
 
-            var sortedMakes = _sortHelper.ApplySort(vehicleMakes, parameters.SortParams.OrderBy);
+            var sortedMakes = _sortHelper.ApplySort(vehicleMakes, sortParams.OrderBy);
 
-            return await PagedList<VehicleMake>.ToPagedList(
-                sortedMakes, 
-                parameters.PagingParams.CurrentPage,
-                parameters.PagingParams.PageSize,
+            return await IPagedList<VehicleMake>.ToPagedList(
+                sortedMakes,
+                pagingParams.CurrentPage,
+                pagingParams.PageSize,
                 sortedMakes.Count());
         }
     }

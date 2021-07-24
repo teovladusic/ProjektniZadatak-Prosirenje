@@ -36,7 +36,6 @@ namespace Repository.Tests
             var repositoryStub = new Mock<IVehicleMakesRepository>();
 
             var vehicleMakeToReturn = new VehicleMake();
-            var vehicleMakeViewModel = new VehicleMakeViewModel();
 
             repositoryStub.Setup(repo => repo.GetById(id))
                 .ReturnsAsync(vehicleMakeToReturn);
@@ -46,8 +45,6 @@ namespace Repository.Tests
                 .Returns(repositoryStub.Object).Verifiable();
 
             var mapperStub = new Mock<IMapper>();
-            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(vehicleMakeToReturn))
-                .Returns(vehicleMakeViewModel);
 
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
@@ -58,8 +55,8 @@ namespace Repository.Tests
 
             repositoryStub.Verify();
             actual.Should().BeEquivalentTo(
-                vehicleMakeViewModel,
-                options => options.ComparingByMembers<VehicleMakeViewModel>());
+                vehicleMakeToReturn,
+                options => options.ComparingByMembers<VehicleMake>());
         }
 
         [Fact]
@@ -69,7 +66,6 @@ namespace Repository.Tests
             var repositoryStub = new Mock<IVehicleMakesRepository>();
 
             var vehicleMakeToReturn = (VehicleMake)null;
-            var vehicleMakeViewModel = (VehicleMakeViewModel)null;
 
             repositoryStub.Setup(repo => repo.GetById(id))
                 .ReturnsAsync(vehicleMakeToReturn);
@@ -79,8 +75,6 @@ namespace Repository.Tests
                 .Returns(repositoryStub.Object).Verifiable();
 
             var mapperStub = new Mock<IMapper>();
-            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(vehicleMakeToReturn))
-                .Returns(vehicleMakeViewModel);
 
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
@@ -91,8 +85,8 @@ namespace Repository.Tests
 
             repositoryStub.Verify();
             actual.Should().BeEquivalentTo(
-                vehicleMakeViewModel,
-                options => options.ComparingByMembers<VehicleMakeViewModel>());
+                vehicleMakeToReturn,
+                options => options.ComparingByMembers<VehicleMake>());
         }
 
         [Fact]
@@ -100,9 +94,7 @@ namespace Repository.Tests
         {
             var repositoryStub = new Mock<IVehicleMakesRepository>();
 
-            var createVehicleMakeViewModel = new CreateVehicleMakeViewModel();
             var vehicleMakeToInsert = new VehicleMake();
-            var vehicleMakeViewModel = new VehicleMakeViewModel();
 
             repositoryStub.Setup(repo => repo.Insert(vehicleMakeToInsert))
                 .Returns(vehicleMakeToInsert);
@@ -112,22 +104,17 @@ namespace Repository.Tests
                 .Returns(repositoryStub.Object).Verifiable();
 
             var mapperStub = new Mock<IMapper>();
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(createVehicleMakeViewModel))
-                .Returns(vehicleMakeToInsert);
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(vehicleMakeToInsert))
-                .Returns(vehicleMakeViewModel);
 
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                 mapperStub.Object, loggerStub.Object);
 
-            var result = await service.InsertVehicleMake(createVehicleMakeViewModel);
+            var result = await service.InsertVehicleMake(vehicleMakeToInsert);
 
             result.Should().BeEquivalentTo(
-                vehicleMakeViewModel,
-                options => options.ComparingByMembers<VehicleMakeViewModel>());
+                vehicleMakeToInsert,
+                options => options.ComparingByMembers<VehicleMake>());
         }
 
         [Fact]
@@ -136,7 +123,6 @@ namespace Repository.Tests
             var repositoryStub = new Mock<IVehicleMakesRepository>();
 
             var vehicleMakeToDelete = new VehicleMake();
-            var vehicleMakeViewModel = new VehicleMakeViewModel();
 
             repositoryStub.Setup(repo => repo.Delete(vehicleMakeToDelete));
 
@@ -148,15 +134,13 @@ namespace Repository.Tests
                 .ReturnsAsync(1);
 
             var mapperStub = new Mock<IMapper>();
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(vehicleMakeViewModel))
-                .Returns(vehicleMakeToDelete);
 
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                 mapperStub.Object, loggerStub.Object);
 
-            var result = await service.DeleteVehicleMake(vehicleMakeViewModel);
+            var result = await service.DeleteVehicleMake(vehicleMakeToDelete);
 
             result.Should().Be(1);
         }
@@ -167,7 +151,6 @@ namespace Repository.Tests
             var repositoryStub = new Mock<IVehicleMakesRepository>();
 
             var vehicleMakeToUpdate = new VehicleMake();
-            var vehicleMakeViewModel = new VehicleMakeViewModel();
 
             repositoryStub.Setup(repo => repo.Update(vehicleMakeToUpdate));
 
@@ -179,15 +162,13 @@ namespace Repository.Tests
                 .ReturnsAsync(1);
 
             var mapperStub = new Mock<IMapper>();
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(vehicleMakeViewModel))
-                .Returns(vehicleMakeToUpdate);
 
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                 mapperStub.Object, loggerStub.Object);
 
-            var result = await service.UpdateVehicleMake(vehicleMakeViewModel);
+            var result = await service.UpdateVehicleMake(vehicleMakeToUpdate);
 
             result.Should().Be(1);
         }

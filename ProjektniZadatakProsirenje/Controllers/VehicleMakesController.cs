@@ -21,26 +21,34 @@ namespace WebAPI.Controllers
     {
         private readonly IVehicleMakesService _vehicleMakesService;
         private readonly ILogger<VehicleMakesController> _logger;
+        private readonly IMapper _mapper;
 
-        public VehicleMakesController(IVehicleMakesService vehicleMakesService, ILogger<VehicleMakesController> logger)
+        public VehicleMakesController(IVehicleMakesService vehicleMakesService, ILogger<VehicleMakesController> logger,
+            IMapper mapper)
         {
             _vehicleMakesService = vehicleMakesService;
             _logger = logger;
+            _mapper = mapper;
         }
 
 
         //GET /VehicleMakes
         [HttpGet]
-        public async Task<ActionResult<PagedList<IVehicleMakeViewModel>>> Index([FromQuery] VehicleMakeParams vehicleMakeParams)
+        public async Task<IActionResult> Index([FromQuery] VehicleMakeParams vehicleMakeParams)
         {
-            var pagingParams = new PagingParams(vehicleMakeParams.PageNumber, vehicleMakeParams.PageSize);
-            var sortParams = new SortParams(vehicleMakeParams.OrderBy);
+            var pagingParams = CommonFactory.CreatePagingParams(vehicleMakeParams.PageNumber, vehicleMakeParams.PageSize);
+            var sortParams = CommonFactory.CreateSortParams(vehicleMakeParams.OrderBy);
+            var vehicleMakeFilterParams = CommonFactory.CreateVehicleMakeFilterParams(vehicleMakeParams.SearchQuery);
 
-            var parameters = new VehicleMakeFilterParams(sortParams, pagingParams, vehicleMakeParams.SearchQuery);
+            var pagedMakes = await _vehicleMakesService.GetVehicleMakes(sortParams, pagingParams, vehicleMakeFilterParams);
 
-            var makes = await _vehicleMakesService.GetVehicleMakes(parameters);
+            var makeViewModels = _mapper.Map<List<VehicleMakeViewModel>>(pagedMakes);
 
-            return makes;
+            var pagedMakeViewModels = 
+                CommonFactory.CreatePagedList(makeViewModels, pagedMakes.TotalCount,
+                pagedMakes.CurrentPage, pagedMakes.PageSize);
+
+            return Ok(pagedMakeViewModels);
         }
 
         //GET /VehicleMakes/{id}
@@ -52,12 +60,14 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var vehicleMakeViewModel = await _vehicleMakesService.GetVehicleMake((int)id);
+            var vehicleMake = await _vehicleMakesService.GetVehicleMake((int)id);
 
-            if (vehicleMakeViewModel is null)
+            if (vehicleMake is null)
             {
                 return NotFound();
             }
+
+            var vehicleMakeViewModel = _mapper.Map<VehicleMakeViewModel>(vehicleMake);
 
             return Ok(vehicleMakeViewModel);
         }
@@ -72,14 +82,18 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            var response = await _vehicleMakesService.InsertVehicleMake(createVehicleMakeViewModel);
+            var vehicleMake = _mapper.Map<VehicleMake>(createVehicleMakeViewModel);
+
+            var response = await _vehicleMakesService.InsertVehicleMake(vehicleMake);
 
             if (response is null)
             {
                 return BadRequest();
             }
 
-            return Created(response.Id.ToString(), response);
+            var vehicleMakeViewModel = _mapper.Map<VehicleMakeViewModel>(response);
+
+            return Created(vehicleMakeViewModel.Id.ToString(), vehicleMakeViewModel);
         }
 
         //POST /VehicleMakes/Delete/{id}
@@ -91,14 +105,14 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var vehicleMakeViewModel = await _vehicleMakesService.GetVehicleMake((int)id);
+            var vehicleMake = await _vehicleMakesService.GetVehicleMake((int)id);
 
-            if (vehicleMakeViewModel == null)
+            if (vehicleMake == null)
             {
                 return NotFound();
             }
 
-            await _vehicleMakesService.DeleteVehicleMake(vehicleMakeViewModel);
+            await _vehicleMakesService.DeleteVehicleMake(vehicleMake);
 
             return Ok();
         }
@@ -120,7 +134,7 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            await _vehicleMakesService.UpdateVehicleMake(vehicleMakeViewModel);
+            await _vehicleMakesService.UpdateVehicleMake(vehicleMake);
             return Ok();
         }
     }

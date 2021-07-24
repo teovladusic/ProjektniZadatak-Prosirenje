@@ -14,7 +14,7 @@
           "MockQueryable.Moq": "5.0.1",
           "Model.Common": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Model.dll": {}
@@ -968,11 +968,11 @@
           "System.Runtime.Extensions": "4.3.0"
         }
       },
-      "System.Linq.Dynamic.Core/1.2.10": {
+      "System.Linq.Dynamic.Core/1.2.11": {
         "runtime": {
-          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {
-            "assemblyVersion": "1.2.10.0",
-            "fileVersion": "1.2.10.0"
+          "lib/net5.0/System.Linq.Dynamic.Core.dll": {
+            "assemblyVersion": "1.2.11.0",
+            "fileVersion": "1.2.11.0"
           }
         }
       },
@@ -1564,7 +1564,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.8",
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "DAL.dll": {}
@@ -1575,7 +1575,7 @@
           "Autofac.Extras.Moq": "6.0.0",
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Model.Common.dll": {}
@@ -2233,12 +2233,12 @@
       "path": "system.linq/4.3.0",
       "hashPath": "system.linq.4.3.0.nupkg.sha512"
     },
-    "System.Linq.Dynamic.Core/1.2.10": {
+    "System.Linq.Dynamic.Core/1.2.11": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fS+z97NOfNuny6gkzHPSTIvjdWx7NcQuGB5H+h8uRpqJUm8BzhujJzl5LcfuwsTuBukxgdNiNsNUqZlV1hFiSw==",
-      "path": "system.linq.dynamic.core/1.2.10",
-      "hashPath": "system.linq.dynamic.core.1.2.10.nupkg.sha512"
+      "sha512": "sha512-5mJ+sInPWNh4JijRBEUI6kUpsBmf2NBnYyVeUwdnQ6j/dBdkeGUURrfJOJRv/U9rSun6OZq9LjfpYoUVWRS4xA==",
+      "path": "system.linq.dynamic.core/1.2.11",
+      "hashPath": "system.linq.dynamic.core.1.2.11.nupkg.sha512"
     },
     "System.Linq.Expressions/4.3.0": {
       "type": "package",

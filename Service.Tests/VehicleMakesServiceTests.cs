@@ -31,23 +31,18 @@ namespace Service.Tests
             var parameters = new VehicleMakeParams();
             var pagingParams = new PagingParams(parameters.PageNumber, parameters.PageSize);
             var sortParams = new SortParams(parameters.OrderBy);
-            var filterParams = new VehicleMakeFilterParams(sortParams, pagingParams, parameters.SearchQuery);
+            var filterParams = new VehicleMakeFilterParams(parameters.SearchQuery);
 
             var pagedMakes = new PagedList<VehicleMake>(list, 1,
-                filterParams.PagingParams.CurrentPage, filterParams.PagingParams.PageSize);
+                pagingParams.CurrentPage, pagingParams.PageSize);
 
-            unitOfWorkStub.Setup(x => x.VehicleMakes.GetAll(It.IsAny<VehicleMakeFilterParams>()))
+            unitOfWorkStub.Setup(x => x.VehicleMakes.GetAll(sortParams, pagingParams, filterParams))
                 .ReturnsAsync(pagedMakes);
-
-            var mappedObjects = new List<VehicleMakeViewModel> { new VehicleMakeViewModel() };
-
-            mapperStub.Setup(x => x.Map<List<VehicleMakeViewModel>>(It.IsAny<PagedList<VehicleMake>>()))
-                .Returns(mappedObjects);
 
             VehicleMakesService vehicleMakesService = new(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await vehicleMakesService.GetVehicleMakes(filterParams);
+            var result = await vehicleMakesService.GetVehicleMakes(sortParams, pagingParams, filterParams);
 
             result.Should().BeEquivalentTo(
                 result,
@@ -64,13 +59,9 @@ namespace Service.Tests
             int id = 1;
 
             var expectedMake = new VehicleMake();
-            var expectedViewModel = new VehicleMakeViewModel();
 
-            unitOfWorkStub.Setup(x => x.VehicleMakes.GetById(It.IsAny<int>()))
+            unitOfWorkStub.Setup(x => x.VehicleMakes.GetById(id))
                 .ReturnsAsync(expectedMake);
-
-            mapperStub.Setup(x => x.Map<VehicleMakeViewModel>(expectedMake))
-                .Returns(expectedViewModel);
 
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
@@ -78,8 +69,8 @@ namespace Service.Tests
             var result = await service.GetVehicleMake(id);
 
             result.Should().BeEquivalentTo(
-                expectedViewModel,
-                options => options.ComparingByMembers<VehicleMakeViewModel>());
+                expectedMake,
+                options => options.ComparingByMembers<VehicleMake>());
         }
 
         [Fact]
@@ -93,9 +84,6 @@ namespace Service.Tests
 
             unitOfWorkStub.Setup(x => x.VehicleMakes.GetById(It.IsAny<int>()))
                 .ReturnsAsync((VehicleMake)null);
-
-            mapperStub.Setup(x => x.Map<VehicleMakeViewModel>(It.IsAny<VehicleMake>()))
-                .Returns((VehicleMakeViewModel)null);
 
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
@@ -112,27 +100,20 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
-            var viewModelToInsert = new CreateVehicleMakeViewModel();
             var makeToInsert = new VehicleMake();
-            var insertedViewModel = new VehicleMakeViewModel();
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(viewModelToInsert))
-                .Returns(makeToInsert);
+            var insertedMake = new VehicleMake { Id = 1 };
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Insert(makeToInsert))
-                .Returns(makeToInsert);
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(makeToInsert))
-                .Returns(insertedViewModel);
+                .Returns(insertedMake);
 
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.InsertVehicleMake(viewModelToInsert);
+            var result = await service.InsertVehicleMake(makeToInsert);
 
             result.Should().BeEquivalentTo(
-                insertedViewModel,
-                options => options.ComparingByMembers<VehicleMakeViewModel>());
+                insertedMake,
+                options => options.ComparingByMembers<VehicleMake>());
         }
 
         [Fact]
@@ -142,23 +123,16 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
-            var viewModelToInsert = new CreateVehicleMakeViewModel();
             var makeToInsert = new VehicleMake();
-            var insertedViewModel = new VehicleMakeViewModel();
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(viewModelToInsert))
-                .Returns(makeToInsert);
+            var insertedMake = (VehicleMake)null;
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Insert(makeToInsert))
-                .Returns((VehicleMake)null);
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(null))
-                .Returns((VehicleMakeViewModel)null);
+                .Returns(insertedMake);
 
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.InsertVehicleMake(viewModelToInsert);
+            var result = await service.InsertVehicleMake(makeToInsert);
 
             result.Should().BeNull();
         }
@@ -170,13 +144,9 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
-            var viewModelToDelete = new VehicleMakeViewModel();
             var makeToDelete = new VehicleMake();
 
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(viewModelToDelete))
-                .Returns(makeToDelete);
-
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Delete(It.IsAny<VehicleMake>()));
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Delete(makeToDelete));
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
                 .ReturnsAsync(1);
@@ -184,7 +154,7 @@ namespace Service.Tests
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.DeleteVehicleMake(viewModelToDelete);
+            var result = await service.DeleteVehicleMake(makeToDelete);
 
             result.Should().Be(1);
         }
@@ -196,10 +166,9 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
 
-            var viewModelToUpdate = new VehicleMakeViewModel();
             var makeToUpdate = new VehicleMake();
 
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(viewModelToUpdate))
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(makeToUpdate))
                 .Returns(makeToUpdate);
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Update(makeToUpdate));
@@ -210,7 +179,7 @@ namespace Service.Tests
             var service = new VehicleMakesService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.UpdateVehicleMake(viewModelToUpdate);
+            var result = await service.UpdateVehicleMake(makeToUpdate);
 
             result.Should().Be(1);
         }

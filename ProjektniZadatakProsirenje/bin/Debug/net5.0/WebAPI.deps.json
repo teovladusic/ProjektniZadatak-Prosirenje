@@ -48,7 +48,7 @@
           "Service": "1.0.0",
           "Service.Common": "1.0.0",
           "Swashbuckle.AspNetCore": "6.1.4",
-          "System.Linq.Dynamic.Core": "1.2.10",
+          "System.Linq.Dynamic.Core": "1.2.11",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -1388,15 +1388,15 @@
           "System.Runtime.Extensions": "4.3.0"
         }
       },
-      "System.Linq.Dynamic.Core/1.2.10": {
+      "System.Linq.Dynamic.Core/1.2.11": {
         "runtime": {
-          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {
-            "assemblyVersion": "1.2.10.0",
-            "fileVersion": "1.2.10.0"
+          "lib/net5.0/System.Linq.Dynamic.Core.dll": {
+            "assemblyVersion": "1.2.11.0",
+            "fileVersion": "1.2.11.0"
           }
         },
         "compile": {
-          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {}
+          "lib/net5.0/System.Linq.Dynamic.Core.dll": {}
         }
       },
       "System.Linq.Expressions/4.3.0": {
@@ -1953,7 +1953,7 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "Z.EntityFramework.Extensions.EFCore/5.2.3": {
+      "Z.EntityFramework.Extensions.EFCore/5.2.4": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Microsoft.EntityFrameworkCore.Relational": "5.0.8",
@@ -1964,8 +1964,8 @@
         },
         "runtime": {
           "lib/netstandard2.1/Z.EntityFramework.Extensions.EFCore.dll": {
-            "assemblyVersion": "5.2.3.0",
-            "fileVersion": "5.2.3.0"
+            "assemblyVersion": "5.2.4.0",
+            "fileVersion": "5.2.4.0"
           }
         },
         "compile": {
@@ -1979,7 +1979,7 @@
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",
           "System.Linq": "4.3.0",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Common.dll": {}
@@ -1997,7 +1997,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.8",
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "DAL.dll": {}
@@ -2014,7 +2014,7 @@
           "MockQueryable.Moq": "5.0.1",
           "Model.Common": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Model.dll": {}
@@ -2028,7 +2028,7 @@
           "Autofac.Extras.Moq": "6.0.0",
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Model.Common.dll": {}
@@ -2045,8 +2045,8 @@
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",
           "Repository.Common": "1.0.0",
-          "System.Linq.Dynamic.Core": "1.2.10",
-          "Z.EntityFramework.Extensions.EFCore": "5.2.3"
+          "System.Linq.Dynamic.Core": "1.2.11",
+          "Z.EntityFramework.Extensions.EFCore": "5.2.4"
         },
         "runtime": {
           "Repository.dll": {}
@@ -2064,7 +2064,7 @@
           "MockQueryable.Moq": "5.0.1",
           "Model": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Repository.Common.dll": {}
@@ -2081,7 +2081,7 @@
           "Repository": "1.0.0",
           "Repository.Common": "1.0.0",
           "Service.Common": "1.0.0",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Service.dll": {}
@@ -2098,7 +2098,7 @@
           "MockQueryable.Moq": "5.0.1",
           "Model": "1.0.0",
           "Newtonsoft.Json": "13.0.1",
-          "System.Linq.Dynamic.Core": "1.2.10"
+          "System.Linq.Dynamic.Core": "1.2.11"
         },
         "runtime": {
           "Service.Common.dll": {}
@@ -4508,12 +4508,12 @@
       "path": "system.linq/4.3.0",
       "hashPath": "system.linq.4.3.0.nupkg.sha512"
     },
-    "System.Linq.Dynamic.Core/1.2.10": {
+    "System.Linq.Dynamic.Core/1.2.11": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fS+z97NOfNuny6gkzHPSTIvjdWx7NcQuGB5H+h8uRpqJUm8BzhujJzl5LcfuwsTuBukxgdNiNsNUqZlV1hFiSw==",
-      "path": "system.linq.dynamic.core/1.2.10",
-      "hashPath": "system.linq.dynamic.core.1.2.10.nupkg.sha512"
+      "sha512": "sha512-5mJ+sInPWNh4JijRBEUI6kUpsBmf2NBnYyVeUwdnQ6j/dBdkeGUURrfJOJRv/U9rSun6OZq9LjfpYoUVWRS4xA==",
+      "path": "system.linq.dynamic.core/1.2.11",
+      "hashPath": "system.linq.dynamic.core.1.2.11.nupkg.sha512"
     },
     "System.Linq.Expressions/4.3.0": {
       "type": "package",
@@ -4879,12 +4879,12 @@
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
-    "Z.EntityFramework.Extensions.EFCore/5.2.3": {
+    "Z.EntityFramework.Extensions.EFCore/5.2.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-4T+RxtIV7uyM8JEIH4T6waBgnWjOS+TnT8+nBEB9/efrW3JeF/OawVZwosXHxYKsFAwiGlArmeKaeJi8rV+qTQ==",
-      "path": "z.entityframework.extensions.efcore/5.2.3",
-      "hashPath": "z.entityframework.extensions.efcore.5.2.3.nupkg.sha512"
+      "sha512": "sha512-RcsmoS8zxmbg6hvz4BR4JFuGwUfVpA7enJi6yxCuWFN8MZzvz3UUm3PsFhVBTgf30lHuuL22BBOAIfEaz35Zaw==",
+      "path": "z.entityframework.extensions.efcore/5.2.4",
+      "hashPath": "z.entityframework.extensions.efcore.5.2.4.nupkg.sha512"
     },
     "Common/1.0.0": {
       "type": "project",

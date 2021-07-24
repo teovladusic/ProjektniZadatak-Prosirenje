@@ -10,10 +10,11 @@ namespace Service.Common
 {
     public interface IVehicleModelsService
     {
-        Task<PagedList<IVehicleModelViewModel>> GetVehicleModels(VehicleModelFilterParams parameters);
-        Task<IVehicleModelViewModel> GetVehicleModel(int id);
-        Task<VehicleModelViewModel> InsertVehicleModel(ICreateVehicleModelViewModel vehicleModel);
-        Task<int> DeleteVehicleModel(IVehicleModelViewModel vehicleModelViewModel);
-        Task<int> UpdateVehicleModel(IEditVehicleModelViewModel editVehicleModelViewModel);
+        Task<IPagedList<VehicleModel>> GetVehicleModels(ISortParams sortParams, IPagingParams pagingParams,
+            IVehicleModelFilterParams vehicleModelFilterParams);
+        Task<VehicleModel> GetVehicleModel(int id);
+        Task<VehicleModel> InsertVehicleModel(VehicleModel vehicleModel);
+        Task<int> DeleteVehicleModel(VehicleModel vehicleModel);
+        Task<int> UpdateVehicleModel(VehicleModel vehicleModel);
     }
 }

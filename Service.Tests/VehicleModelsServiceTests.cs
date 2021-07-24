@@ -29,28 +29,22 @@ namespace Service.Tests
             var parameters = new VehicleModelParams();
             var pagingParams = new PagingParams(parameters.PageNumber, parameters.PageSize);
             var sortParams = new SortParams(parameters.OrderBy);
-            var filterParams = new VehicleModelFilterParams(pagingParams, sortParams,
-                parameters.SearchQuery, parameters.MakeName);
+            var filterParams = new VehicleModelFilterParams(parameters.SearchQuery, parameters.MakeName);
 
             var pagedModels = new PagedList<VehicleModel>(list, 1,
-                filterParams.PagingParams.CurrentPage, filterParams.PagingParams.PageSize);
+                pagingParams.CurrentPage, pagingParams.PageSize);
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetAll(filterParams))
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetAll(sortParams, pagingParams, filterParams))
                 .ReturnsAsync(pagedModels);
-
-            var mappedObjects = new List<VehicleModelViewModel> { new VehicleModelViewModel() };
-
-            mapperStub.Setup(mapper => mapper.Map<List<VehicleModelViewModel>>(It.IsAny<PagedList<VehicleModel>>()))
-                .Returns(mappedObjects);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
               mapperStub.Object, loggerStub.Object);
 
-            var result = await service.GetVehicleModels(filterParams);
+            var result = await service.GetVehicleModels(sortParams, pagingParams, filterParams);
 
             result.Should().BeEquivalentTo(
                 result,
-                options => options.ComparingByMembers<VehicleModelViewModel>());
+                options => options.ComparingByMembers<IPagedList<VehicleModel>>());
         }
 
         [Fact]
@@ -63,13 +57,9 @@ namespace Service.Tests
             int id = 1;
 
             var model = new VehicleModel();
-            var viewModel = new VehicleModelViewModel();
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetById(id))
                 .ReturnsAsync(model);
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleModelViewModel>(model))
-                .Returns(viewModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
               mapperStub.Object, loggerStub.Object);
@@ -77,8 +67,8 @@ namespace Service.Tests
             var result = await service.GetVehicleModel(id);
 
             result.Should().BeEquivalentTo(
-                viewModel,
-                options => options.ComparingByMembers<VehicleModelViewModel>());
+                model,
+                options => options.ComparingByMembers<VehicleModel>());
         }
 
         [Fact]
@@ -90,11 +80,10 @@ namespace Service.Tests
 
             int id = 1;
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetById(id))
-                .ReturnsAsync((VehicleModel)null);
+            var returnedVehicleModel = (VehicleModel)null;
 
-            mapperStub.Setup(mapper => mapper.Map<VehicleModelViewModel>(null))
-                .Returns((VehicleModelViewModel)null);
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetById(id))
+                .ReturnsAsync(returnedVehicleModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
               mapperStub.Object, loggerStub.Object);
@@ -111,27 +100,20 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
 
-            var viewModelToInsert = new CreateVehicleModelViewModel();
             var modelToInsert = new VehicleModel();
-            var insertedViewModel = new VehicleModelViewModel();
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleModel>(viewModelToInsert))
-                .Returns(modelToInsert);
+            var insertedModel = new VehicleModel { Id = 1 };
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Insert(modelToInsert))
-                .Returns(modelToInsert);
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleModelViewModel>(modelToInsert))
-                .Returns(insertedViewModel);
+                .Returns(insertedModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.InsertVehicleModel(viewModelToInsert);
+            var result = await service.InsertVehicleModel(modelToInsert);
 
             result.Should().BeEquivalentTo(
-                insertedViewModel,
-                options => options.ComparingByMembers<VehicleModelViewModel>());
+                insertedModel,
+                options => options.ComparingByMembers<VehicleModel>());
         }
 
         [Fact]
@@ -141,23 +123,16 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
 
-            var viewModelToInsert = new CreateVehicleModelViewModel();
             var modelToInsert = new VehicleModel();
-            var insertedViewModel = new VehicleModelViewModel();
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleModel>(viewModelToInsert))
-                .Returns(modelToInsert);
+            var insertedModel = (VehicleModel)null;
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Insert(modelToInsert))
-                .Returns((VehicleModel)null);
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleModelViewModel>(null))
-                .Returns((VehicleModelViewModel)null);
+                .Returns(insertedModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.InsertVehicleModel(viewModelToInsert);
+            var result = await service.InsertVehicleModel(modelToInsert);
 
             result.Should().BeNull();
         }
@@ -169,13 +144,9 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
 
-            var viewModelToDelete = new VehicleModelViewModel();
             var modelToDelete = new VehicleModel();
 
-            mapperStub.Setup(mapper => mapper.Map<VehicleModel>(viewModelToDelete))
-                .Returns(modelToDelete);
-
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Delete(It.IsAny<VehicleModel>()));
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Delete(modelToDelete));
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
                 .ReturnsAsync(1);
@@ -183,7 +154,7 @@ namespace Service.Tests
             var service = new VehicleModelsService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.DeleteVehicleModel(viewModelToDelete);
+            var result = await service.DeleteVehicleModel(modelToDelete);
 
             result.Should().Be(1);
         }
@@ -195,11 +166,7 @@ namespace Service.Tests
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
 
-            var viewModelToUpdate = new EditVehicleModelViewModel();
             var modelToUpdate = new VehicleModel();
-
-            mapperStub.Setup(mapper => mapper.Map<VehicleModel>(viewModelToUpdate))
-                .Returns(modelToUpdate);
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Update(modelToUpdate));
 
@@ -209,7 +176,7 @@ namespace Service.Tests
             var service = new VehicleModelsService(unitOfWorkStub.Object,
                mapperStub.Object, loggerStub.Object);
 
-            var result = await service.UpdateVehicleModel(viewModelToUpdate);
+            var result = await service.UpdateVehicleModel(modelToUpdate);
 
             result.Should().Be(1);
         }

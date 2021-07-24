@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public class PagingParams
+    public class PagingParams : IPagingParams
     {
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
