@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[6.4.4, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.8, )"
@@ -144,6 +148,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.8, )"
@@ -223,6 +231,10 @@
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
             },
             "MockQueryable.Moq": {
               "target": "Package",
@@ -306,6 +318,10 @@
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
             },
             "MockQueryable.Moq": {
               "target": "Package",
@@ -408,6 +424,10 @@
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -512,6 +532,10 @@
               "target": "Package",
               "version": "[6.4.4, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
             "MockQueryable.Moq": {
               "target": "Package",
               "version": "[5.0.1, )"
@@ -593,6 +617,10 @@
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -686,6 +714,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
             "MockQueryable.Moq": {
               "target": "Package",
               "version": "[5.0.1, )"
@@ -767,6 +799,10 @@
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
             },
             "MockQueryable.Moq": {
               "target": "Package",

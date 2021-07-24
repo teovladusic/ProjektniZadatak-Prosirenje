@@ -20,14 +20,12 @@ namespace Service
     public class VehicleMakesService : IVehicleMakesService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
         private readonly ILogger<VehicleMakesService> _logger;
         private readonly IVehicleMakesRepository _vehicleMakesRepository;
 
-        public VehicleMakesService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<VehicleMakesService> logger, ISortHelper<VehicleMake> sortHelper)
+        public VehicleMakesService(IUnitOfWork unitOfWork, ILogger<VehicleMakesService> logger, ISortHelper<VehicleMake> sortHelper)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
             _logger = logger;
             _vehicleMakesRepository = new VehicleMakesRepository(_unitOfWork, sortHelper);
         }
@@ -35,34 +33,33 @@ namespace Service
         public async Task<IPagedList<VehicleMake>> GetVehicleMakes(ISortParams sortParams, IPagingParams pagingParams,
             IVehicleMakeFilterParams vehicleMakeFilterParams)
         {
-            var pagedMakes = await _unitOfWork.VehicleMakes.GetAll(sortParams, pagingParams, vehicleMakeFilterParams);
+            var pagedMakes = await _vehicleMakesRepository.GetAll(sortParams, pagingParams, vehicleMakeFilterParams);
 
             return pagedMakes;
         }
 
         public async Task<VehicleMake> GetVehicleMake(int id)
         {
-            var make = await _unitOfWork.VehicleMakes.GetById(id);
+            var make = await _vehicleMakesRepository.GetById(id);
             return make;
         }
 
         public async Task<VehicleMake> InsertVehicleMake(VehicleMake vehicleMake)
         {
-            var createdMake = await _unitOfWork.AddAsync(vehicleMake);
-            //var createdMake = _unitOfWork.VehicleMakes.Insert(vehicleMake);
+            var createdMake = _vehicleMakesRepository.Insert(vehicleMake);
             await _unitOfWork.Complete();
             return createdMake;
         }
 
         public async Task<int> DeleteVehicleMake(VehicleMake vehicleMake)
         {
-            _unitOfWork.VehicleMakes.Delete(vehicleMake);
+            _vehicleMakesRepository.Delete(vehicleMake);
             return await _unitOfWork.Complete();
         }
 
         public async Task<int> UpdateVehicleMake(VehicleMake vehicleMake)
         {
-            _unitOfWork.VehicleMakes.Update(vehicleMake);
+            _vehicleMakesRepository.Update(vehicleMake);
             return await _unitOfWork.Complete();
         }
     }

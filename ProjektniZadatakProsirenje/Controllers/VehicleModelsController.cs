@@ -41,7 +41,11 @@ namespace WebAPI.Controllers
 
             var models = await _vehicleModelsService.GetVehicleModels(sortParams, pagingParams, vehicleModelFilterParams);
 
-            return Ok(models);
+            var viewModels = _mapper.Map<List<VehicleModelViewModel>>(models);
+
+            var pagedViewModels = CommonFactory.CreatePagedList(viewModels, models.TotalCount, models.CurrentPage, models.PageSize);
+
+            return Ok(pagedViewModels);
         }
 
         //GET /VehicleModels/{id}
@@ -60,7 +64,9 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(vehicleModel);
+            var vehicleModelViewModel = _mapper.Map<VehicleModelViewModel>(vehicleModel);
+
+            return Ok(vehicleModelViewModel);
         }
 
         //POST /VehicleModels/Create

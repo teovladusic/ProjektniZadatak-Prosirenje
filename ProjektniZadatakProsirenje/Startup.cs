@@ -41,7 +41,10 @@ namespace ProjektniZadatakProsirenje
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjektniZadatakProsirenje", Version = "v1" });
@@ -76,6 +79,7 @@ namespace ProjektniZadatakProsirenje
 
                 return new ApplicationDbContext(opt.Options);
             }).AsSelf().InstancePerLifetimeScope();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

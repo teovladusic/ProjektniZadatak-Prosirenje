@@ -15,14 +15,17 @@ namespace Repository
 {
     public class VehicleMakesRepository : Repository<VehicleMake>, IVehicleMakesRepository
     {
-        private readonly ApplicationDbContext _context;
         private readonly ISortHelper<VehicleMake> _sortHelper;
-        private DbSet<VehicleMake> _entities;
 
-        public VehicleMakesRepository(ApplicationDbContext dbContext, ISortHelper<VehicleMake> sortHelper)
-            : base(dbContext)
+        public VehicleMakesRepository(IUnitOfWork unitOfWork, ISortHelper<VehicleMake> sortHelper)
+            : base(unitOfWork)
         {
-            _context = dbContext;
+            _sortHelper = sortHelper;
+        }
+
+        public VehicleMakesRepository(ApplicationDbContext context, ISortHelper<VehicleMake> sortHelper)
+            : base(context)
+        {
             _sortHelper = sortHelper;
         }
 
@@ -33,12 +36,12 @@ namespace Repository
 
             if (!string.IsNullOrWhiteSpace(vehicleMakeFilterParams.SearchQuery))
             {
-                vehicleMakes = _context.VehicleMakes.Where(make => make.Name.Contains(vehicleMakeFilterParams.SearchQuery)
+                vehicleMakes = Context.VehicleMakes.Where(make => make.Name.Contains(vehicleMakeFilterParams.SearchQuery)
             || make.Abrv.Contains(vehicleMakeFilterParams.SearchQuery));
             }
             else
             {
-                vehicleMakes = _context.VehicleMakes.AsQueryable();
+                vehicleMakes = Context.VehicleMakes.AsQueryable();
             }
 
             var sortedMakes = _sortHelper.ApplySort(vehicleMakes, sortParams.OrderBy);

@@ -14,41 +14,48 @@ namespace Repository.Common
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly ApplicationDbContext _context;
-        private readonly DbSet<T> _entities;
+        public ApplicationDbContext Context;
+        private DbSet<T> _entities;
 
         public Repository(ApplicationDbContext dbContext)
         {
-            _context = dbContext;
-            _entities = _context.Set<T>();
+            Context = dbContext;
+        }
+
+        public Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
+        {
+        }
+
+        protected virtual DbSet<T> Entities
+        {
+            get { return _entities ?? (_entities = Context.Set<T>()); }
         }
 
         public async Task<List<T>> GetAll()
         {
-            var entites = _entities.Where(x => true);
-            return await entites.ToListAsync();
+            return await Entities.ToListAsync();
         }
 
         public async Task<T> GetById(object id)
         {
-            return await _entities.FindAsync(id);
+            return await Entities.FindAsync(id);
         }
 
 
         public T Insert(T entity)
         {
-            return _entities.Add(entity).Entity;
+            return Entities.Add(entity).Entity;
         }
 
         public void Delete(T entity)
         {
-            _entities.Remove(entity);
+            Entities.Remove(entity);
         }
 
 
         public void Update(T entity)
         {
-            _entities.Update(entity);
+            Entities.Update(entity);
         }
     }
 }

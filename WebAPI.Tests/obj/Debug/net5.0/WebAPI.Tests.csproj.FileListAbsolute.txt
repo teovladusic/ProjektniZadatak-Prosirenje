@@ -358,3 +358,6 @@ C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\WebAPI.Tests\obj\Debug\n
 C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\WebAPI.Tests\obj\Debug\net5.0\ref\WebAPI.Tests.dll
 C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\WebAPI.Tests\obj\Debug\net5.0\WebAPI.Tests.pdb
 C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\WebAPI.Tests\obj\Debug\net5.0\WebAPI.Tests.genruntimeconfig.cache
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\WebAPI.Tests\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\WebAPI.Tests\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\WebAPI.Tests\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

@@ -4,6 +4,7 @@ using DAL.Models;
 using Microsoft.Extensions.Logging;
 using Model;
 using Model.Common;
+using Repository;
 using Repository.Common;
 using Service.Common;
 using System;
@@ -17,46 +18,46 @@ namespace Service
     public class VehicleModelsService : IVehicleModelsService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
         private readonly ILogger<VehicleModelsService> _logger;
+        private readonly IVehicleModelsRepository _vehicleModelsRepository;
 
-        public VehicleModelsService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<VehicleModelsService> logger)
+        public VehicleModelsService(IUnitOfWork unitOfWork, ISortHelper<VehicleModel> sortHelper, ILogger<VehicleModelsService> logger)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
             _logger = logger;
+            _vehicleModelsRepository = new VehicleModelsRepository(_unitOfWork, sortHelper);
         }
 
         public async Task<IPagedList<VehicleModel>> GetVehicleModels(ISortParams sortParams, IPagingParams pagingParams,
             IVehicleModelFilterParams vehicleModelFilterParams)
         {
-            var pagedModels = await _unitOfWork.VehicleModels.GetAll(sortParams, pagingParams, vehicleModelFilterParams);
+            var pagedModels = await _vehicleModelsRepository.GetAll(sortParams, pagingParams, vehicleModelFilterParams);
 
             return pagedModels;
         }
 
         public async Task<VehicleModel> GetVehicleModel(int id)
         {
-            var model = await _unitOfWork.VehicleModels.GetById(id);
+            var model = await _vehicleModelsRepository.GetById(id);
             return model;
         }
 
         public async Task<VehicleModel> InsertVehicleModel(VehicleModel vehicleModel)
         {
-            var createdModel = _unitOfWork.VehicleModels.Insert(vehicleModel);
+            var createdModel = _vehicleModelsRepository.Insert(vehicleModel);
             await _unitOfWork.Complete();
             return createdModel;
         }
 
         public async Task<int> DeleteVehicleModel(VehicleModel vehicleModel)
         {
-            _unitOfWork.VehicleModels.Delete(vehicleModel);
+            _vehicleModelsRepository.Delete(vehicleModel);
             return await _unitOfWork.Complete();
         }
 
         public async Task<int> UpdateVehicleModel(VehicleModel vehicleModel)
         {
-            _unitOfWork.VehicleModels.Update(vehicleModel);
+            _vehicleModelsRepository.Update(vehicleModel);
             return await _unitOfWork.Complete();
         }
     }
