@@ -215,7 +215,11 @@
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -228,6 +232,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            },
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.0.0, )"
@@ -384,6 +392,9 @@
               },
               "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj": {
                 "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj"
+              },
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj"
               },
               "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj": {
                 "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj"

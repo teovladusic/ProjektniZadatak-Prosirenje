@@ -3,7 +3,6 @@ using Common;
 using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Project.Model;
 using Repository.Common;
 using System;
 using System.Collections.Generic;

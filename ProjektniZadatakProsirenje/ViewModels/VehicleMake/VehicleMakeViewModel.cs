@@ -1,10 +1,9 @@
-﻿using Project.Model.Common;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Project.Model
 {
-    public class VehicleMakeViewModel : IVehicleMakeViewModel
+    public class VehicleMakeViewModel
     {
         [Required]
         public int Id { get; set; }

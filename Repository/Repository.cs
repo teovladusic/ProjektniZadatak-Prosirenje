@@ -20,6 +20,7 @@ namespace Repository.Common
         public Repository(ApplicationDbContext dbContext)
         {
             Context = dbContext;
+            Context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         public Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
@@ -47,8 +48,18 @@ namespace Repository.Common
             return Entities.Add(entity).Entity;
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                Entities.Attach(entity);
+            }
+            Entities.Remove(entity);
+        }
+
+        public virtual void Delete(object id)
+        {
+            T entity = Entities.Find(id);
             Entities.Remove(entity);
         }
 

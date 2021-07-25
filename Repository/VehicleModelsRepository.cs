@@ -52,9 +52,10 @@ namespace Repository
                 sortedModels.Count());
         }
 
-        public async Task<VehicleModel> GetById(int id)
+        public virtual async Task<VehicleModel> GetById(int id)
         {
-            var model = await Context.VehicleModels.Where(m => m.Id == id).Include(m => m.VehicleMake).FirstOrDefaultAsync();
+            var model = await Context.VehicleModels.Where(m => m.Id == id).Include(m => m.VehicleMake)
+                .AsNoTracking().FirstOrDefaultAsync();
             return model;
         }
     }

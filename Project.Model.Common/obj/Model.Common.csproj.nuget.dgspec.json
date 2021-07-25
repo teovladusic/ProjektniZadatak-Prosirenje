@@ -4,14 +4,14 @@
     "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj": {}
   },
   "projects": {
-    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj": {
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj",
-        "projectName": "Model.Common",
-        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj",
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\obj\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,118 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Autofac.Extras.Moq": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
+            "MockQueryable.Moq": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.2.11, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj",
+        "projectName": "Model.Common",
+        "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj",
+        "packagesPath": "C:\\Users\\teovl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\teovl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\DAL\\DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            },
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.0.0, )"

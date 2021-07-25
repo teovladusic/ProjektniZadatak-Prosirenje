@@ -8,8 +8,6 @@ using Xunit;
 using MockQueryable.Moq;
 using Microsoft.EntityFrameworkCore;
 using Service.Common;
-using Model.Common;
-using Project.Model.Common;
 using Microsoft.Extensions.Logging;
 using WebAPI.Controllers;
 using Project.Model;

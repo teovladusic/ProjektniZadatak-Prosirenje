@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Common;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Model;
-using Model.Common;
+using Model.VehicleModels;
 using Repository;
 using Repository.Common;
 using Service.Common;
@@ -20,44 +20,56 @@ namespace Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<VehicleModelsService> _logger;
         private readonly IVehicleModelsRepository _vehicleModelsRepository;
+        private readonly IMapper _mapper;
 
-        public VehicleModelsService(IUnitOfWork unitOfWork, ISortHelper<VehicleModel> sortHelper, ILogger<VehicleModelsService> logger)
+        public VehicleModelsService(IUnitOfWork unitOfWork, ISortHelper<VehicleModel> sortHelper, ILogger<VehicleModelsService> logger,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _vehicleModelsRepository = new VehicleModelsRepository(_unitOfWork, sortHelper);
+            _mapper = mapper;
         }
 
-        public async Task<IPagedList<VehicleModel>> GetVehicleModels(ISortParams sortParams, IPagingParams pagingParams,
+        public async Task<IPagedList<VehicleModelDomainModel>> GetVehicleModels(ISortParams sortParams, IPagingParams pagingParams,
             IVehicleModelFilterParams vehicleModelFilterParams)
         {
             var pagedModels = await _vehicleModelsRepository.GetAll(sortParams, pagingParams, vehicleModelFilterParams);
 
-            return pagedModels;
+            var domainModelsList = _mapper.Map<List<VehicleModelDomainModel>>(pagedModels);
+
+            var pagedDomainModels = CommonFactory.CreatePagedList(domainModelsList, pagedModels.TotalCount, pagedModels.CurrentPage,
+                pagedModels.PageSize);
+
+            return pagedDomainModels;
         }
 
-        public async Task<VehicleModel> GetVehicleModel(int id)
+        public async Task<VehicleModelDomainModel> GetVehicleModel(int id)
         {
             var model = await _vehicleModelsRepository.GetById(id);
-            return model;
+            return _mapper.Map<VehicleModelDomainModel>(model);
         }
 
-        public async Task<VehicleModel> InsertVehicleModel(VehicleModel vehicleModel)
+        public async Task<VehicleModelDomainModel> InsertVehicleModel(CreateVehicleModelDomainModel createVehicleModelDomainModel)
         {
-            var createdModel = _vehicleModelsRepository.Insert(vehicleModel);
+            var modelToCreate = _mapper.Map<VehicleModel>(createVehicleModelDomainModel);
+            var createdModel = _vehicleModelsRepository.Insert(modelToCreate);
+            var createdDomainModel = _mapper.Map<VehicleModelDomainModel>(createdModel);
             await _unitOfWork.Complete();
-            return createdModel;
+            return createdDomainModel;
         }
 
-        public async Task<int> DeleteVehicleModel(VehicleModel vehicleModel)
+        public async Task<int> DeleteVehicleModel(int id)
         {
-            _vehicleModelsRepository.Delete(vehicleModel);
-            return await _unitOfWork.Complete();
+            _vehicleModelsRepository.Delete(id);
+            var result = await _unitOfWork.Complete();
+            return result;
         }
 
-        public async Task<int> UpdateVehicleModel(VehicleModel vehicleModel)
+        public async Task<int> UpdateVehicleModel(VehicleModelDomainModel vehicleModelDomainModel)
         {
-            _vehicleModelsRepository.Update(vehicleModel);
+            var vehicleModelToUpdate = _mapper.Map<VehicleModel>(vehicleModelDomainModel);
+            _vehicleModelsRepository.Update(vehicleModelToUpdate);
             return await _unitOfWork.Complete();
         }
     }

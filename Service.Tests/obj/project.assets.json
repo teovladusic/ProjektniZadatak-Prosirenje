@@ -2815,7 +2815,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "AutoMapper": "10.1.1",
           "Autofac.Extras.Moq": "6.0.0",
+          "DAL": "1.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "5.0.8",
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",

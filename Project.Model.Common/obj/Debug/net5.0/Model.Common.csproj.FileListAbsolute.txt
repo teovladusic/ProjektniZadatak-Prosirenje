@@ -22,3 +22,9 @@ C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\obj
 C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.dll
 C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\obj\Debug\net5.0\ref\Model.Common.dll
 C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.pdb
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\bin\Debug\net5.0\Model.Common.runtimeconfig.json
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\bin\Debug\net5.0\Model.Common.runtimeconfig.dev.json
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\bin\Debug\net5.0\DAL.dll
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\bin\Debug\net5.0\DAL.pdb
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.csproj.CopyComplete
+C:\Users\teovl\source\repos\ProjektniZadatak-Prosirenje\Project.Model.Common\obj\Debug\net5.0\Model.Common.genruntimeconfig.cache

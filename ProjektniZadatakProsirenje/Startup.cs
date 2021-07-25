@@ -74,11 +74,11 @@ namespace ProjektniZadatakProsirenje
 
                 var opt = new DbContextOptionsBuilder<ApplicationDbContext>();
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-
+                opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 opt.EnableSensitiveDataLogging();
 
                 return new ApplicationDbContext(opt.Options);
-            }).AsSelf().InstancePerLifetimeScope();
+            }).AsSelf();
 
         }
 

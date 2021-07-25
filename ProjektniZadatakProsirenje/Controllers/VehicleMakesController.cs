@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Model;
 using AutoMapper;
 using Project.Model;
-using Project.Model.Common;
+using Model.VehicleMakes;
 
 namespace WebAPI.Controllers
 {
@@ -76,22 +76,21 @@ namespace WebAPI.Controllers
         [HttpPost("Create/")]
         public async Task<IActionResult> Create([Bind("Name,Abrv")] CreateVehicleMakeViewModel createVehicleMakeViewModel)
         {
-            if (string.IsNullOrEmpty(createVehicleMakeViewModel.Name.Trim()) ||
-                string.IsNullOrEmpty(createVehicleMakeViewModel.Abrv.Trim()))
+            var createVehicleMakeDomainModel = _mapper.Map<CreateVehicleMakeDomainModel>(createVehicleMakeViewModel);
+
+            if (!!createVehicleMakeDomainModel.IsValid())
             {
                 return BadRequest();
             }
 
-            var vehicleMake = _mapper.Map<VehicleMake>(createVehicleMakeViewModel);
+            var insertedVehicleMake = await _vehicleMakesService.InsertVehicleMake(createVehicleMakeDomainModel);
 
-            var response = await _vehicleMakesService.InsertVehicleMake(vehicleMake);
-
-            if (response is null)
+            if (insertedVehicleMake is null)
             {
                 return BadRequest();
             }
 
-            var vehicleMakeViewModel = _mapper.Map<VehicleMakeViewModel>(response);
+            var vehicleMakeViewModel = _mapper.Map<VehicleMakeViewModel>(insertedVehicleMake);
 
             return Created(vehicleMakeViewModel.Id.ToString(), vehicleMakeViewModel);
         }
@@ -127,14 +126,17 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            var vehicleMake = await _vehicleMakesService.GetVehicleMake(vehicleMakeViewModel.Id);
+            var existingVehicleMakeDomainModel = 
+                await _vehicleMakesService.GetVehicleMake(vehicleMakeViewModel.Id);
 
-            if (vehicleMake is null)
+            if (existingVehicleMakeDomainModel is null)
             {
                 return NotFound();
             }
 
-            await _vehicleMakesService.UpdateVehicleMake(vehicleMake);
+            var newVehicleMakeDomainModel = _mapper.Map<VehicleMakeDomainModel>(vehicleMakeViewModel);
+
+            await _vehicleMakesService.UpdateVehicleMake(newVehicleMakeDomainModel);
             return Ok();
         }
     }

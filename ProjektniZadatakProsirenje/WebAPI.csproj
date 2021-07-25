@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\Project.Common\Common.csproj" />
+    <ProjectReference Include="..\Project.Model.Common\Model.Common.csproj" />
     <ProjectReference Include="..\Project.Model\Model.csproj" />
     <ProjectReference Include="..\Repository.Common\Repository.Common.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />

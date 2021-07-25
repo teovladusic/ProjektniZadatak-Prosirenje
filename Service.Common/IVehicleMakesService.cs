@@ -1,9 +1,7 @@
 ﻿using Common;
 using DAL.Models;
 using Model;
-using Model.Common;
-using Project.Model;
-using Project.Model.Common;
+using Model.VehicleMakes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +11,11 @@ namespace Service.Common
 {
     public interface IVehicleMakesService
     {
-        Task<IPagedList<VehicleMake>> GetVehicleMakes(ISortParams sortParams, IPagingParams pagingParams,
+        Task<IPagedList<VehicleMakeDomainModel>> GetVehicleMakes(ISortParams sortParams, IPagingParams pagingParams,
             IVehicleMakeFilterParams vehicleMakeFilterParams);
-        Task<VehicleMake> GetVehicleMake(int id);
-        Task<VehicleMake> InsertVehicleMake(VehicleMake vehicleMake);
-        Task<int> DeleteVehicleMake(VehicleMake vehicleMakeViewModel);
-        Task<int> UpdateVehicleMake(VehicleMake vehicleMakeViewModel);
+        Task<VehicleMakeDomainModel> GetVehicleMake(int id);
+        Task<VehicleMakeDomainModel> InsertVehicleMake(CreateVehicleMakeDomainModel vehicleMakeDomainModel);
+        Task<int> DeleteVehicleMake(VehicleMakeDomainModel vehicleMakeDomainModel);
+        Task<int> UpdateVehicleMake(VehicleMakeDomainModel vehicleMakeDomainModel);
     }
 }

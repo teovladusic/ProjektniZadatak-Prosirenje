@@ -4,6 +4,7 @@ using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Model;
+using Model.VehicleModels;
 using Service;
 using Service.Common;
 using System;
@@ -39,11 +40,12 @@ namespace WebAPI.Controllers
             var vehicleModelFilterParams = CommonFactory.CreateVehicleModelFilterParams(vehicleModelParams.SearchQuery,
                 vehicleModelParams.MakeName);
 
-            var models = await _vehicleModelsService.GetVehicleModels(sortParams, pagingParams, vehicleModelFilterParams);
+            var pagedDomainModels = await _vehicleModelsService.GetVehicleModels(sortParams, pagingParams, vehicleModelFilterParams);
 
-            var viewModels = _mapper.Map<List<VehicleModelViewModel>>(models);
+            var viewModels = _mapper.Map<List<VehicleModelViewModel>>(pagedDomainModels);
 
-            var pagedViewModels = CommonFactory.CreatePagedList(viewModels, models.TotalCount, models.CurrentPage, models.PageSize);
+            var pagedViewModels = CommonFactory.CreatePagedList(viewModels, pagedDomainModels.TotalCount, pagedDomainModels.CurrentPage,
+                pagedDomainModels.PageSize);
 
             return Ok(pagedViewModels);
         }
@@ -57,14 +59,14 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var vehicleModel = await _vehicleModelsService.GetVehicleModel((int)id);
+            var domainModel = await _vehicleModelsService.GetVehicleModel((int)id);
 
-            if (vehicleModel is null)
+            if (domainModel is null)
             {
                 return NotFound();
             }
 
-            var vehicleModelViewModel = _mapper.Map<VehicleModelViewModel>(vehicleModel);
+            var vehicleModelViewModel = _mapper.Map<VehicleModelViewModel>(domainModel);
 
             return Ok(vehicleModelViewModel);
         }
@@ -73,24 +75,24 @@ namespace WebAPI.Controllers
         [HttpPost("Create/")]
         public async Task<IActionResult> Create([Bind("Name,Abrv,VehicleMakeId")] CreateVehicleModelViewModel createVehicleModelViewModel)
         {
-            if (string.IsNullOrEmpty(createVehicleModelViewModel.Name.Trim()) ||
-                string.IsNullOrEmpty(createVehicleModelViewModel.Abrv.Trim()) ||
-                createVehicleModelViewModel.VehicleMakeId < 0)
+            var createVehicleModelDomainModel = _mapper.Map<CreateVehicleModelDomainModel>(createVehicleModelViewModel);
+
+            if (!createVehicleModelDomainModel.IsValid())
             {
                 return BadRequest();
             }
 
-            var vehicleModelToInsert = _mapper.Map<VehicleModel>(createVehicleModelViewModel);
-
             try
             {
-                var response = await _vehicleModelsService.InsertVehicleModel(vehicleModelToInsert);
+                var response = await _vehicleModelsService.InsertVehicleModel(createVehicleModelDomainModel);
                 if (response is null)
                 {
                     return BadRequest();
                 }
 
-                return Created(response.Id.ToString(), response);
+                var createdModelViewModel = _mapper.Map<VehicleModelViewModel>(response);
+
+                return Created(createdModelViewModel.Id.ToString(), createdModelViewModel);
             }
             catch (Exception _)
             {
@@ -107,14 +109,14 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var vehicleModelViewModel = await _vehicleModelsService.GetVehicleModel((int)id);
+            var vehicleModel = await _vehicleModelsService.GetVehicleModel((int)id);
 
-            if (vehicleModelViewModel == null)
+            if (vehicleModel is null)
             {
                 return NotFound();
             }
 
-            await _vehicleModelsService.DeleteVehicleModel(vehicleModelViewModel);
+            await _vehicleModelsService.DeleteVehicleModel((int)id);
 
             return Ok();
         }
@@ -122,25 +124,23 @@ namespace WebAPI.Controllers
         [HttpPost("Edit/")]
         public async Task<IActionResult> Edit([Bind("Id,Name,Abrv,VehicleMakeId")] EditVehicleModelViewModel editVehicleModelViewModel)
         {
-            if (string.IsNullOrEmpty(editVehicleModelViewModel.Name.Trim()) ||
-               string.IsNullOrEmpty(editVehicleModelViewModel.Abrv.Trim()) ||
-               editVehicleModelViewModel.VehicleMakeId < 0)
+            var editedDomainModel = _mapper.Map<VehicleModelDomainModel>(editVehicleModelViewModel);
+
+            if (!editedDomainModel.IsValid())
             {
                 return BadRequest();
             }
 
-            var modelToEdit = await _vehicleModelsService.GetVehicleModel(editVehicleModelViewModel.Id);
+            var domainModelToEdit = await _vehicleModelsService.GetVehicleModel(editVehicleModelViewModel.Id);
 
-            if (modelToEdit is null)
+            if (domainModelToEdit is null)
             {
                 return NotFound();
             }
 
-            var editedModel = _mapper.Map<VehicleModel>(editVehicleModelViewModel);
-
             try
             {
-                await _vehicleModelsService.UpdateVehicleModel(editedModel);
+                await _vehicleModelsService.UpdateVehicleModel(editedDomainModel);
 
             }
             catch (Exception _)

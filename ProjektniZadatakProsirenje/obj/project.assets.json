@@ -2531,7 +2531,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "AutoMapper": "10.1.1",
           "Autofac.Extras.Moq": "6.0.0",
+          "DAL": "1.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "5.0.8",
           "MockQueryable.Moq": "5.0.1",
           "Newtonsoft.Json": "13.0.1",
@@ -8613,6 +8615,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.8",
       "MockQueryable.Moq >= 5.0.1",
       "Model >= 1.0.0",
+      "Model.Common >= 1.0.0",
       "Newtonsoft.Json >= 13.0.1",
       "Repository >= 1.0.0",
       "Repository.Common >= 1.0.0",
@@ -8654,6 +8657,9 @@
             },
             "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj": {
               "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Common\\Common.csproj"
+            },
+            "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj": {
+              "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model.Common\\Model.Common.csproj"
             },
             "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj": {
               "projectPath": "C:\\Users\\teovl\\source\\repos\\ProjektniZadatak-Prosirenje\\Project.Model\\Model.csproj"

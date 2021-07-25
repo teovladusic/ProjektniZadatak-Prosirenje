@@ -4,9 +4,7 @@ using DAL;
 using DAL.Models;
 using Microsoft.Extensions.Logging;
 using Model;
-using Model.Common;
-using Project.Model;
-using Project.Model.Common;
+using Model.VehicleMakes;
 using Repository;
 using Repository.Common;
 using Service.Common;
@@ -22,43 +20,54 @@ namespace Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<VehicleMakesService> _logger;
         private readonly IVehicleMakesRepository _vehicleMakesRepository;
+        private readonly IMapper _mapper;
 
-        public VehicleMakesService(IUnitOfWork unitOfWork, ILogger<VehicleMakesService> logger, ISortHelper<VehicleMake> sortHelper)
+        public VehicleMakesService(IUnitOfWork unitOfWork, ILogger<VehicleMakesService> logger, ISortHelper<VehicleMake> sortHelper,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _vehicleMakesRepository = new VehicleMakesRepository(_unitOfWork, sortHelper);
+            _mapper = mapper;
         }
 
-        public async Task<IPagedList<VehicleMake>> GetVehicleMakes(ISortParams sortParams, IPagingParams pagingParams,
+        public async Task<IPagedList<VehicleMakeDomainModel>> GetVehicleMakes(ISortParams sortParams, IPagingParams pagingParams,
             IVehicleMakeFilterParams vehicleMakeFilterParams)
         {
             var pagedMakes = await _vehicleMakesRepository.GetAll(sortParams, pagingParams, vehicleMakeFilterParams);
 
-            return pagedMakes;
+            var domainModels = _mapper.Map<List<VehicleMakeDomainModel>>(pagedMakes);
+            var pagedDomainModels = CommonFactory.CreatePagedList(domainModels, pagedMakes.TotalCount, pagedMakes.CurrentPage,
+                pagedMakes.PageSize);
+
+            return pagedDomainModels;
         }
 
-        public async Task<VehicleMake> GetVehicleMake(int id)
+        public async Task<VehicleMakeDomainModel> GetVehicleMake(int id)
         {
             var make = await _vehicleMakesRepository.GetById(id);
-            return make;
+            return _mapper.Map<VehicleMakeDomainModel>(make);
         }
 
-        public async Task<VehicleMake> InsertVehicleMake(VehicleMake vehicleMake)
+        public async Task<VehicleMakeDomainModel> InsertVehicleMake(CreateVehicleMakeDomainModel vehicleMakeDomainModel)
         {
-            var createdMake = _vehicleMakesRepository.Insert(vehicleMake);
+            var makeToCreate = _mapper.Map<VehicleMake>(vehicleMakeDomainModel);
+
+            var createdMake = _vehicleMakesRepository.Insert(makeToCreate);
             await _unitOfWork.Complete();
-            return createdMake;
+            return _mapper.Map<VehicleMakeDomainModel>(createdMake);
         }
 
-        public async Task<int> DeleteVehicleMake(VehicleMake vehicleMake)
+        public async Task<int> DeleteVehicleMake(VehicleMakeDomainModel vehicleMakeDomainModel)
         {
+            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDomainModel);
             _vehicleMakesRepository.Delete(vehicleMake);
             return await _unitOfWork.Complete();
         }
 
-        public async Task<int> UpdateVehicleMake(VehicleMake vehicleMake)
+        public async Task<int> UpdateVehicleMake(VehicleMakeDomainModel vehicleMakeDomainModel)
         {
+            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDomainModel);
             _vehicleMakesRepository.Update(vehicleMake);
             return await _unitOfWork.Complete();
         }
