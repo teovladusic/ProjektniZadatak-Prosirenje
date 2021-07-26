@@ -13,8 +13,8 @@ namespace Model.VehicleMakes
 
         public bool IsValid()
         {
-            bool isValid = !!string.IsNullOrEmpty(Name.Trim())
-                && !!string.IsNullOrEmpty(Abrv.Trim());
+            bool isValid = !string.IsNullOrEmpty(Name.Trim())
+                && !string.IsNullOrEmpty(Abrv.Trim());
 
             return isValid;
         }

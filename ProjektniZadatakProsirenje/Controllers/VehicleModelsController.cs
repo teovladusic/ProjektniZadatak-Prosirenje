@@ -109,9 +109,9 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var vehicleModel = await _vehicleModelsService.GetVehicleModel((int)id);
+            var vehicleModelDomainModel = await _vehicleModelsService.GetVehicleModel((int)id);
 
-            if (vehicleModel is null)
+            if (vehicleModelDomainModel is null)
             {
                 return NotFound();
             }

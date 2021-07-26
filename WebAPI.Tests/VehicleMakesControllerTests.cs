@@ -18,6 +18,8 @@ using Common;
 using Model;
 using Xunit.Abstractions;
 using AutoMapper;
+using Model.VehicleModels;
+using Model.VehicleMakes;
 
 namespace WebAPI.Tests
 {
@@ -43,22 +45,24 @@ namespace WebAPI.Tests
             var sortParams = CommonFactory.CreateSortParams(parameters.OrderBy);
             var filterParams = CommonFactory.CreateVehicleMakeFilterParams(parameters.SearchQuery);
 
-            var listToReturn = new List<VehicleMake> { new VehicleMake { Name = "name" } };
-            var pagedListToReturn = new PagedList<VehicleMake>(listToReturn, listToReturn.Count,
+            var domainModelsList = new List<VehicleMakeDomainModel> { new VehicleMakeDomainModel() };
+            var pagedDomainModelsList = CommonFactory.CreatePagedList(domainModelsList, domainModelsList.Count,
                 pagingParams.CurrentPage, pagingParams.PageSize);
 
-            var listOfViewModels = new List<VehicleMakeViewModel> { new VehicleMakeViewModel { Name = "name" } };
-            var pagedListOfViewModels = new PagedList<VehicleMakeViewModel>(listOfViewModels, listOfViewModels.Count,
-                pagingParams.CurrentPage, pagingParams.PageSize);
-
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMakes(It.IsAny<ISortParams>(), It.IsAny<PagingParams>(), 
+            vehicleMakesServiceStub.Setup(x => x.GetVehicleMakes(It.IsAny<ISortParams>(), It.IsAny<IPagingParams>(),
                 It.IsAny<IVehicleMakeFilterParams>()))
-                .ReturnsAsync(pagedListToReturn);
+                .ReturnsAsync(pagedDomainModelsList);
 
             var mapperStub = new Mock<IMapper>();
 
-            mapperStub.Setup(mapper => mapper.Map<List<VehicleMakeViewModel>>(It.IsAny<IPagedList<VehicleMake>>()))
+            var listOfViewModels = new List<VehicleMakeViewModel> { new VehicleMakeViewModel() };
+            mapperStub.Setup(mapper => mapper.Map<List<VehicleMakeViewModel>>(pagedDomainModelsList))
                 .Returns(listOfViewModels);
+
+            var pagedMakeViewModels =
+                CommonFactory.CreatePagedList(listOfViewModels, listOfViewModels.Count,
+                pagingParams.CurrentPage, pagingParams.PageSize);
+
 
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
@@ -66,7 +70,7 @@ namespace WebAPI.Tests
             var result = await controller.Index(parameters) as OkObjectResult;
 
             result.Value.Should().BeEquivalentTo(
-                pagedListOfViewModels,
+                pagedMakeViewModels,
                 options => options.ComparingByMembers<VehicleMakeViewModel>());
         }
 
@@ -76,10 +80,13 @@ namespace WebAPI.Tests
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             int itemId = 1;
             vehicleMakesServiceStub.Setup(service => service.GetVehicleMake(itemId))
-                .ReturnsAsync((VehicleMake)null);
+                .ReturnsAsync((VehicleMakeDomainModel)null);
 
             var loggerStub = new Mock<ILogger<VehicleMakesController>>();
             var mapperStub = new Mock<IMapper>();
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(It.IsAny<VehicleMakeDomainModel>()))
+                .Returns(new VehicleMakeViewModel());
 
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
@@ -95,6 +102,13 @@ namespace WebAPI.Tests
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             int itemId = 1;
 
+            var expectedDomainModel = new VehicleMakeDomainModel
+            {
+                Id = itemId,
+                Name = "name",
+                Abrv = "abrv"
+            };
+
             var expectedViewModel = new VehicleMakeViewModel
             {
                 Id = itemId,
@@ -105,10 +119,13 @@ namespace WebAPI.Tests
             var vehicleMake = new VehicleMake();
 
             vehicleMakesServiceStub.Setup(service => service.GetVehicleMake(itemId))
-                .ReturnsAsync(vehicleMake);
+                .ReturnsAsync(expectedDomainModel);
 
             var loggerStub = new Mock<ILogger<VehicleMakesController>>();
             var mapperStub = new Mock<IMapper>();
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(expectedDomainModel))
+                .Returns(expectedViewModel);
 
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
@@ -143,65 +160,117 @@ namespace WebAPI.Tests
         {
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
 
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
             var createVehicleMakeViewModel = new CreateVehicleMakeViewModel
             {
                 Name = "name",
                 Abrv = "abrv"
             };
 
+            var createVehicleMakeDomainModel = new CreateVehicleMakeDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+            };
+
             var id = new Random().Next();
 
-            var vehicleMakeViewModel = new VehicleMakeViewModel
+            var insertedDomainModel = new VehicleMakeDomainModel
             {
                 Name = "name",
                 Abrv = "abrv",
                 Id = id
             };
 
-            var vehicleMake = new VehicleMake();
-            var insertedVehicleMake = new VehicleMake { Id = 1 };
+            var insertedViewModel = new VehicleMakeViewModel
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
 
-            vehicleMakesServiceStub.Setup(x => x.InsertVehicleMake(vehicleMake))
-                .ReturnsAsync(insertedVehicleMake);
+            vehicleMakesServiceStub.Setup(x => x.InsertVehicleMake(createVehicleMakeDomainModel))
+                .ReturnsAsync(insertedDomainModel);
 
             var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<CreateVehicleMakeDomainModel>(createVehicleMakeViewModel))
+                .Returns(createVehicleMakeDomainModel);
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeViewModel>(insertedDomainModel))
+                .Returns(insertedViewModel);
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
+
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
 
             var result = await controller.Create(createVehicleMakeViewModel) as CreatedResult;
 
             result.Value.Should().BeEquivalentTo(
-                vehicleMakeViewModel,
+                insertedViewModel,
                 options => options.ComparingByMembers<VehicleMakeViewModel>());
         }
 
 
         [Theory]
         [InlineData("", "abrv")]
+        [InlineData("", "")]
         [InlineData("name", " ")]
         [InlineData(" ", "abrv")]
-        [InlineData("name", "abrv")]
         public async Task Create_WithInvalidEntries_ReturnsBadRequest(
-            string Name, string Abrv)
+            string name, string abrv)
         {
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
 
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
             var createVehicleMakeViewModel = new CreateVehicleMakeViewModel
             {
-                Name = Name,
-                Abrv = Abrv
+                Name = name,
+                Abrv = abrv
             };
 
-            var vehicleMake = new VehicleMake();
-
-            vehicleMakesServiceStub.Setup(x => x.InsertVehicleMake(vehicleMake))
-                .ReturnsAsync((VehicleMake)null);
+            var createVehicleMakeDomainModel = new CreateVehicleMakeDomainModel
+            {
+                Name = name,
+                Abrv = abrv
+            };
 
             var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<CreateVehicleMakeDomainModel>(createVehicleMakeViewModel))
+                .Returns(createVehicleMakeDomainModel);
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
+            var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
+                mapperStub.Object);
+
+            var result = await controller.Create(createVehicleMakeViewModel);
+
+            vehicleMakesServiceStub.Verify(service => service.InsertVehicleMake(It.IsAny<CreateVehicleMakeDomainModel>()),
+                Times.Never);
+            result.Should().BeOfType<BadRequestResult>();
+        }
+
+        [Fact]
+        public async Task Create_WithCreatedMakeNull_ReturnsBadRequest()
+        {
+            var createVehicleMakeViewModel = new CreateVehicleMakeViewModel
+            {
+                Name = "name",
+                Abrv = "abrv"
+            };
+
+            var createVehicleMakeDomainModel = new CreateVehicleMakeDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv"
+            };
+            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
+            vehicleMakesServiceStub.Setup(service => service.InsertVehicleMake(createVehicleMakeDomainModel))
+                .ReturnsAsync((VehicleMakeDomainModel)null);
+
+            var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<CreateVehicleMakeDomainModel>(createVehicleMakeViewModel))
+                .Returns(createVehicleMakeDomainModel);
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
 
@@ -210,28 +279,29 @@ namespace WebAPI.Tests
             result.Should().BeOfType<BadRequestResult>();
         }
 
+        
         [Fact]
         public async Task Delete_WithValidId_ReturnsOkAndDeltesItem()
         {
-            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
-
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
             var id = new Random().Next();
 
-            var vehicleMakeViewModel = new VehicleMakeViewModel
+            var vehicleMakeDomainModelToDelete = new VehicleMakeDomainModel
             {
                 Name = "name",
                 Abrv = "abrv",
                 Id = id
             };
 
-            var vehicleMake = new VehicleMake();
+            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
+            vehicleMakesServiceStub.Setup(service => service.GetVehicleMake(id))
+                .ReturnsAsync(vehicleMakeDomainModelToDelete);
 
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
-                .ReturnsAsync(vehicleMake);
+            vehicleMakesServiceStub.Setup(service => service.DeleteVehicleMake(vehicleMakeDomainModelToDelete));
 
             var mapperStub = new Mock<IMapper>();
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
+
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
 
@@ -239,74 +309,92 @@ namespace WebAPI.Tests
 
             result.Should().BeOfType<OkResult>();
         }
-
+        
         [Fact]
         public async Task Delete_WithInvalidId_ReturnsNotFound()
         {
+            int? id = null;
+
             var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
 
             var loggerStub = new Mock<ILogger<VehicleMakesController>>();
 
-            int? id = null;
-
             var mapperStub = new Mock<IMapper>();
+
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object, 
                 mapperStub.Object);
 
             var result = await controller.Delete(id);
 
+            vehicleMakesServiceStub.Verify(service => service.GetVehicleMake(It.IsAny<int>()),
+                Times.Never);
+            vehicleMakesServiceStub.Verify(service => service.DeleteVehicleMake(It.IsAny<VehicleMakeDomainModel>()),
+                Times.Never);
             result.Should().BeOfType<NotFoundResult>();
         }
-
+        
         [Fact]
         public async Task Delete_WithIUnexistingItem_ReturnsNotFound()
         {
-            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
-
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
             int id = new Random().Next();
 
+            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
-                .ReturnsAsync((VehicleMake)null);
+                .ReturnsAsync((VehicleMakeDomainModel)null);
 
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
             var mapperStub = new Mock<IMapper>();
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
 
             var result = await controller.Delete(id);
 
+            vehicleMakesServiceStub.Verify(service => service.DeleteVehicleMake(It.IsAny<VehicleMakeDomainModel>()),
+                Times.Never);
             result.Should().BeOfType<NotFoundResult>();
         }
-
+        
         [Fact]
         public async Task Edit_WithIUnexistingItem_ReturnsNotFound()
         {
-            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
-
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
             int id = new Random().Next();
 
-            var editedMake = new VehicleMakeViewModel
+            var editedMakeViewModel = new VehicleMakeViewModel
             {
                 Name = "name",
                 Abrv = "abrv",
                 Id = id
             };
 
+            var editedDomainMake = new VehicleMakeDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+                Id = id
+            };
+
+            VehicleMakeDomainModel existingVehicleMakeDomainModel = null;
+
+            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
             vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
-                .ReturnsAsync((VehicleMake)null);
+                .ReturnsAsync(existingVehicleMakeDomainModel);
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
 
             var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeDomainModel>(editedMakeViewModel))
+                .Returns(editedDomainMake);
+
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
 
-            var result = await controller.Edit(editedMake);
+            var result = await controller.Edit(editedMakeViewModel);
 
+            vehicleMakesServiceStub.Verify(service => service.UpdateVehicleMake(It.IsAny<VehicleMakeDomainModel>()),
+                Times.Never);
             result.Should().BeOfType<NotFoundResult>();
         }
-
+        
         [Theory]
         [InlineData(" ", "abrv")]
         [InlineData("name", " ")]
@@ -315,13 +403,16 @@ namespace WebAPI.Tests
         public async Task Edit_WithInvalidParameters_ReturnsBadRequest(
             string Name, string Abrv)
         {
-            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
-
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
             int id = new Random().Next();
 
-            var makeToEdit = new VehicleMakeViewModel
+            var editedViewModel = new VehicleMakeViewModel
+            {
+                Name = Name,
+                Abrv = Abrv,
+                Id = id
+            };
+
+            var editedMakeDomainModel = new VehicleMakeDomainModel
             {
                 Name = Name,
                 Abrv = Abrv,
@@ -329,49 +420,67 @@ namespace WebAPI.Tests
             };
 
             var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeDomainModel>(editedViewModel))
+                .Returns(editedMakeDomainModel);
 
+            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
 
-            var result = await controller.Edit(makeToEdit);
+            var result = await controller.Edit(editedViewModel);
 
+            vehicleMakesServiceStub.Verify(service => service.GetVehicleMake(It.IsAny<int>()),
+                Times.Never);
             result.Should().BeOfType<BadRequestResult>();
         }
 
         [Fact]
         public async Task Edit_WithValidParameters_ReturnsOk()
         {
-            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
-
-            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
-
             int id = new Random().Next();
 
-            var existingMake = new VehicleMakeViewModel
-            {
-                Name = "existingName",
-                Abrv = "existingAbrv",
-                Id = id
-            };
-
-            var editedMake = new VehicleMakeViewModel
+            var editedMakeViewModel = new VehicleMakeViewModel
             {
                 Name = "name",
                 Abrv = "abrv",
                 Id = id
             };
 
-            var vehicleMake = new VehicleMake();
+            var editedDomainMake = new VehicleMakeDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+                Id = id
+            };
 
-            vehicleMakesServiceStub.Setup(x => x.GetVehicleMake(id))
-                .ReturnsAsync(vehicleMake);
+            var existingVehicleMakeDomainModel = new VehicleMakeDomainModel
+            {
+                Name = "old name",
+                Abrv = "old abrv",
+                Id = id
+            };
+
+            var vehicleMakesServiceStub = new Mock<IVehicleMakesService>();
+            vehicleMakesServiceStub.Setup(service => service.GetVehicleMake(id))
+                .ReturnsAsync(existingVehicleMakeDomainModel);
+
+            vehicleMakesServiceStub.Setup(service => service.UpdateVehicleMake(editedDomainMake));
+
+            var loggerStub = new Mock<ILogger<VehicleMakesController>>();
 
             var mapperStub = new Mock<IMapper>();
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeDomainModel>(editedMakeViewModel))
+                .Returns(editedDomainMake);
+
             var controller = new VehicleMakesController(vehicleMakesServiceStub.Object, loggerStub.Object,
                 mapperStub.Object);
 
-            var result = await controller.Edit(editedMake);
+            var result = await controller.Edit(editedMakeViewModel) ;
 
+            vehicleMakesServiceStub.Verify(service => service.UpdateVehicleMake(It.IsAny<VehicleMakeDomainModel>()),
+                Times.Once);
             result.Should().BeOfType<OkResult>();
         }
     }

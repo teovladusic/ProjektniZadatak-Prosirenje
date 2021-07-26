@@ -13,7 +13,6 @@ using Service;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using FluentAssertions;
-using Project.Model;
 using Common;
 using Model;
 

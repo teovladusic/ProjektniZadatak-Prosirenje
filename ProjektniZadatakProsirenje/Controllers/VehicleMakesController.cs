@@ -78,7 +78,7 @@ namespace WebAPI.Controllers
         {
             var createVehicleMakeDomainModel = _mapper.Map<CreateVehicleMakeDomainModel>(createVehicleMakeViewModel);
 
-            if (!!createVehicleMakeDomainModel.IsValid())
+            if (!createVehicleMakeDomainModel.IsValid())
             {
                 return BadRequest();
             }
@@ -92,7 +92,10 @@ namespace WebAPI.Controllers
 
             var vehicleMakeViewModel = _mapper.Map<VehicleMakeViewModel>(insertedVehicleMake);
 
-            return Created(vehicleMakeViewModel.Id.ToString(), vehicleMakeViewModel);
+            var created = Created(vehicleMakeViewModel.Id.ToString(), vehicleMakeViewModel);
+            _logger.LogInformation(created.Value.ToString());
+
+            return created;
         }
 
         //POST /VehicleMakes/Delete/{id}
@@ -119,9 +122,8 @@ namespace WebAPI.Controllers
         [HttpPost("Edit/")]
         public async Task<IActionResult> Edit([Bind("Id,Name,Abrv")] VehicleMakeViewModel vehicleMakeViewModel)
         {
-            if (string.IsNullOrEmpty(vehicleMakeViewModel.Name.Trim()) ||
-                string.IsNullOrEmpty(vehicleMakeViewModel.Abrv.Trim()) ||
-                vehicleMakeViewModel.Id < 0)
+            var editedDomainModel = _mapper.Map<VehicleMakeDomainModel>(vehicleMakeViewModel);
+            if (!editedDomainModel.IsValid())
             {
                 return BadRequest();
             }
@@ -134,9 +136,7 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var newVehicleMakeDomainModel = _mapper.Map<VehicleMakeDomainModel>(vehicleMakeViewModel);
-
-            await _vehicleMakesService.UpdateVehicleMake(newVehicleMakeDomainModel);
+            await _vehicleMakesService.UpdateVehicleMake(editedDomainModel);
             return Ok();
         }
     }
