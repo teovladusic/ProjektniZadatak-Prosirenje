@@ -31,6 +31,15 @@ namespace Service
             _mapper = mapper;
         }
 
+        public VehicleMakesService(IUnitOfWork unitOfWork, ILogger<VehicleMakesService> logger, ISortHelper<VehicleMake> sortHelper,
+            IMapper mapper, IVehicleMakesRepository vehicleMakesRepository)
+        {
+            _unitOfWork = unitOfWork;
+            _logger = logger;
+            _vehicleMakesRepository = vehicleMakesRepository;
+            _mapper = mapper;
+        }
+
         public async Task<IPagedList<VehicleMakeDomainModel>> GetVehicleMakes(ISortParams sortParams, IPagingParams pagingParams,
             IVehicleMakeFilterParams vehicleMakeFilterParams)
         {

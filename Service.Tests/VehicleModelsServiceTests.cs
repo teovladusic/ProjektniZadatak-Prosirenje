@@ -4,6 +4,7 @@ using DAL.Models;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Model;
+using Model.VehicleModels;
 using Moq;
 using Repository.Common;
 using System;
@@ -24,26 +25,37 @@ namespace Service.Tests
             var unitOfWorkStub = new Mock<IUnitOfWork>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
+            var vehicleModelsRepositoryStub = new Mock<IVehicleModelsRepository>();
 
-            var list = new List<VehicleModel> { new VehicleModel() };
             var parameters = new VehicleModelParams();
-            var pagingParams = new PagingParams(parameters.PageNumber, parameters.PageSize);
-            var sortParams = new SortParams(parameters.OrderBy);
-            var filterParams = new VehicleModelFilterParams(parameters.SearchQuery, parameters.MakeName);
+            var pagingParams = CommonFactory.CreatePagingParams(parameters.PageNumber,
+                parameters.PageSize);
+            var sortParams = CommonFactory.CreateSortParams(parameters.OrderBy);
+            var filterParams = CommonFactory.CreateVehicleModelFilterParams(parameters.SearchQuery,
+                parameters.MakeName);
 
-            var pagedModels = new PagedList<VehicleModel>(list, 1,
+            var modelsList = new List<VehicleModel> { new VehicleModel() };
+            var pagedModelsList = CommonFactory.CreatePagedList(modelsList, modelsList.Count,
                 pagingParams.CurrentPage, pagingParams.PageSize);
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetAll(sortParams, pagingParams, filterParams))
-                .ReturnsAsync(pagedModels);
+            vehicleModelsRepositoryStub.Setup(repo => repo.GetAll(It.IsAny<ISortParams>(),
+                It.IsAny<IPagingParams>(), It.IsAny<IVehicleModelFilterParams>()))
+                .ReturnsAsync(pagedModelsList);
+
+            var domainModelsList = new List<VehicleModelDomainModel> { new VehicleModelDomainModel() };
+            var pagedDomainModelsList = CommonFactory.CreatePagedList(domainModelsList, domainModelsList.Count,
+                pagingParams.CurrentPage, pagingParams.PageSize);
+
+            mapperStub.Setup(mapper => mapper.Map<List<VehicleModelDomainModel>>(pagedModelsList))
+                .Returns(domainModelsList);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
-              mapperStub.Object, loggerStub.Object);
+              loggerStub.Object, mapperStub.Object, vehicleModelsRepositoryStub.Object);
 
             var result = await service.GetVehicleModels(sortParams, pagingParams, filterParams);
 
             result.Should().BeEquivalentTo(
-                result,
+                pagedDomainModelsList,
                 options => options.ComparingByMembers<IPagedList<VehicleModel>>());
         }
 
@@ -53,21 +65,42 @@ namespace Service.Tests
             var unitOfWorkStub = new Mock<IUnitOfWork>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
+            var vehicleModelsRepositoryStub = new Mock<IVehicleModelsRepository>();
 
             int id = 1;
 
-            var model = new VehicleModel();
+            var vehicleMake = new VehicleMake { Id = 1, Name = "makeName", Abrv = "makeAbrv" };
+            var existingModel = new VehicleModel
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = vehicleMake.Id,
+                VehicleMake = vehicleMake
+            };
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetById(id))
-                .ReturnsAsync(model);
+            vehicleModelsRepositoryStub.Setup(repo => repo.GetById(id))
+                .ReturnsAsync(existingModel);
+
+            var vehicleModelDomainModel = new VehicleModelDomainModel
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = vehicleMake.Id,
+                VehicleMake = vehicleMake
+            };
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleModelDomainModel>(existingModel))
+                .Returns(vehicleModelDomainModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
-              mapperStub.Object, loggerStub.Object);
+              loggerStub.Object, mapperStub.Object, vehicleModelsRepositoryStub.Object);
 
             var result = await service.GetVehicleModel(id);
 
             result.Should().BeEquivalentTo(
-                model,
+                vehicleModelDomainModel,
                 options => options.ComparingByMembers<VehicleModel>());
         }
 
@@ -77,20 +110,28 @@ namespace Service.Tests
             var unitOfWorkStub = new Mock<IUnitOfWork>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
+            var vehicleModelsRepositoryStub = new Mock<IVehicleModelsRepository>();
 
             int id = 1;
 
-            var returnedVehicleModel = (VehicleModel)null;
+            var existingModel = (VehicleModel)null;
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.GetById(id))
-                .ReturnsAsync(returnedVehicleModel);
+            vehicleModelsRepositoryStub.Setup(repo => repo.GetById(id))
+                .ReturnsAsync(existingModel);
+
+            var vehicleModelDomainModel = (VehicleModelDomainModel)null;
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleModelDomainModel>(existingModel))
+                .Returns(vehicleModelDomainModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
-              mapperStub.Object, loggerStub.Object);
+              loggerStub.Object, mapperStub.Object, vehicleModelsRepositoryStub.Object);
 
             var result = await service.GetVehicleModel(id);
 
-            result.Should().BeNull();
+            result.Should().BeEquivalentTo(
+                vehicleModelDomainModel,
+                options => options.ComparingByMembers<VehicleModel>());
         }
 
         [Fact]
@@ -99,20 +140,54 @@ namespace Service.Tests
             var unitOfWorkStub = new Mock<IUnitOfWork>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
+            var vehicleModelsRepositoryStub = new Mock<IVehicleModelsRepository>();
 
-            var modelToInsert = new VehicleModel();
-            var insertedModel = new VehicleModel { Id = 1 };
+            var createVehicleModelDomainModel = new CreateVehicleModelDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = 1
+            };
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Insert(modelToInsert))
-                .Returns(insertedModel);
+            var modelToCreate = new VehicleModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = 1
+            };
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleModel>(createVehicleModelDomainModel))
+                .Returns(modelToCreate);
+
+            var createdVehicleModel = new VehicleModel
+            {
+                Id = 842,
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = 1
+            };
+
+            vehicleModelsRepositoryStub.Setup(repo => repo.Insert(modelToCreate))
+                .Returns(createdVehicleModel);
+
+            var createdVehicleModelDomainModel = new VehicleModelDomainModel
+            {
+                Id = 842,
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = 1
+
+            };
+            mapperStub.Setup(mapper => mapper.Map<VehicleModelDomainModel>(createdVehicleModel))
+                .Returns(createdVehicleModelDomainModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+             loggerStub.Object, mapperStub.Object, vehicleModelsRepositoryStub.Object);
 
-            var result = await service.InsertVehicleModel(modelToInsert);
+            var result = await service.InsertVehicleModel(createVehicleModelDomainModel);
 
             result.Should().BeEquivalentTo(
-                insertedModel,
+                createdVehicleModelDomainModel,
                 options => options.ComparingByMembers<VehicleModel>());
         }
 
@@ -122,19 +197,43 @@ namespace Service.Tests
             var unitOfWorkStub = new Mock<IUnitOfWork>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
+            var vehicleModelsRepositoryStub = new Mock<IVehicleModelsRepository>();
 
-            var modelToInsert = new VehicleModel();
-            var insertedModel = (VehicleModel)null;
+            var createVehicleModelDomainModel = new CreateVehicleModelDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = 1
+            };
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Insert(modelToInsert))
-                .Returns(insertedModel);
+            var modelToCreate = new VehicleModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = 1
+            };
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleModel>(createVehicleModelDomainModel))
+                .Returns(modelToCreate);
+
+            var createdVehicleModel = (VehicleModel)null;
+
+            vehicleModelsRepositoryStub.Setup(repo => repo.Insert(modelToCreate))
+                .Returns(createdVehicleModel);
+
+            var createdVehicleModelDomainModel = (VehicleModelDomainModel)null;
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleModelDomainModel>(createdVehicleModel))
+                .Returns(createdVehicleModelDomainModel);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+             loggerStub.Object, mapperStub.Object, vehicleModelsRepositoryStub.Object);
 
-            var result = await service.InsertVehicleModel(modelToInsert);
+            var result = await service.InsertVehicleModel(createVehicleModelDomainModel);
 
-            result.Should().BeNull();
+            result.Should().BeEquivalentTo(
+                createdVehicleModelDomainModel,
+                options => options.ComparingByMembers<VehicleModel>());
         }
 
         [Fact]
@@ -143,19 +242,22 @@ namespace Service.Tests
             var unitOfWorkStub = new Mock<IUnitOfWork>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
+            var vehicleModelsRepositoryStub = new Mock<IVehicleModelsRepository>();
 
-            var modelToDelete = new VehicleModel();
+            var idToDelete = 1;
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Delete(modelToDelete));
+            vehicleModelsRepositoryStub.Setup(repo => repo.Delete(idToDelete));
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
                 .ReturnsAsync(1);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+             loggerStub.Object, mapperStub.Object, vehicleModelsRepositoryStub.Object);
 
-            var result = await service.DeleteVehicleModel(modelToDelete);
+            var result = await service.DeleteVehicleModel(idToDelete);
 
+            vehicleModelsRepositoryStub.Verify(repo => repo.Delete(It.IsAny<int>()),
+                Times.Once);
             result.Should().Be(1);
         }
 
@@ -165,19 +267,42 @@ namespace Service.Tests
             var unitOfWorkStub = new Mock<IUnitOfWork>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleModelsService>>();
+            var vehicleModelsRepositoryStub = new Mock<IVehicleModelsRepository>();
 
-            var modelToUpdate = new VehicleModel();
+            var vehicleMake = new VehicleMake { Id = 1, Name = "makeName", Abrv = "makeAbrv" };
+            var vehicleModelDomainModel = new VehicleModelDomainModel
+            {
+                Id = 1,
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = vehicleMake.Id,
+                VehicleMake = vehicleMake
+            };
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleModels.Update(modelToUpdate));
+            var vehicleModel = new VehicleModel
+            {
+                Id = 1,
+                Name = "name",
+                Abrv = "abrv",
+                VehicleMakeId = vehicleMake.Id,
+                VehicleMake = vehicleMake
+            };
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleModel>(vehicleModelDomainModel))
+                .Returns(vehicleModel);
+
+            vehicleModelsRepositoryStub.Setup(repo => repo.Update(vehicleModel));
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
                 .ReturnsAsync(1);
 
             var service = new VehicleModelsService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+            loggerStub.Object, mapperStub.Object, vehicleModelsRepositoryStub.Object);
 
-            var result = await service.UpdateVehicleModel(modelToUpdate);
+            var result = await service.UpdateVehicleModel(vehicleModelDomainModel);
 
+            vehicleModelsRepositoryStub.Verify(repo => repo.Update(It.IsAny<VehicleModel>()),
+                Times.Once);
             result.Should().Be(1);
         }
     }

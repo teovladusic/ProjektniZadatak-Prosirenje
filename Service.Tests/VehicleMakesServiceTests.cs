@@ -3,8 +3,6 @@ using Common;
 using DAL.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Project.Model;
-using Project.Model.Common;
 using Repository.Common;
 using Service.Common;
 using System;
@@ -15,6 +13,7 @@ using Service;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Model;
+using Model.VehicleMakes;
 
 namespace Service.Tests
 {
@@ -24,69 +23,104 @@ namespace Service.Tests
         public async Task GetVehicleMakes_ValidParameters_ReturnsMakes()
         {
             var unitOfWorkStub = new Mock<IUnitOfWork>();
+            var sortHelperStub = new Mock<ISortHelper<VehicleMake>>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
 
-            var list = new List<VehicleMake> { new VehicleMake() };
             var parameters = new VehicleMakeParams();
-            var pagingParams = new PagingParams(parameters.PageNumber, parameters.PageSize);
-            var sortParams = new SortParams(parameters.OrderBy);
-            var filterParams = new VehicleMakeFilterParams(parameters.SearchQuery);
+            var pagingParams = CommonFactory.CreatePagingParams(parameters.PageNumber, parameters.PageSize);
+            var sortParams = CommonFactory.CreateSortParams(parameters.OrderBy);
+            var filterParams = CommonFactory.CreateVehicleMakeFilterParams(parameters.SearchQuery);
 
-            var pagedMakes = new PagedList<VehicleMake>(list, 1,
+            var makes = new List<VehicleMake> { new VehicleMake() };
+            var pagedMakes = new PagedList<VehicleMake>(makes, makes.Count,
                 pagingParams.CurrentPage, pagingParams.PageSize);
 
-            unitOfWorkStub.Setup(x => x.VehicleMakes.GetAll(sortParams, pagingParams, filterParams))
+            repositoryStub.Setup(repo => repo.GetAll(It.IsAny<ISortParams>(), It.IsAny<IPagingParams>(),
+                It.IsAny<IVehicleMakeFilterParams>()))
                 .ReturnsAsync(pagedMakes);
 
+            var domainModelsList = new List<VehicleMakeDomainModel> { new VehicleMakeDomainModel() };
+            mapperStub.Setup(mapper => mapper.Map<List<VehicleMakeDomainModel>>(pagedMakes))
+                .Returns(domainModelsList);
+
+            var pagedDomainModels = CommonFactory.CreatePagedList(domainModelsList, pagedMakes.TotalCount, pagedMakes.CurrentPage,
+                pagedMakes.PageSize);
+
             VehicleMakesService vehicleMakesService = new(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+               loggerStub.Object, sortHelperStub.Object, mapperStub.Object, repositoryStub.Object);
 
             var result = await vehicleMakesService.GetVehicleMakes(sortParams, pagingParams, filterParams);
 
             result.Should().BeEquivalentTo(
-                result,
-                options => options.ComparingByMembers<IVehicleMakeViewModel>());
+                pagedDomainModels,
+                options => options.ComparingByMembers<IPagedList<VehicleMakeDomainModel>>());
         }
 
         [Fact]
         public async Task GetVehicleMake_WithExistingItem_ReturnsMake()
         {
             var unitOfWorkStub = new Mock<IUnitOfWork>();
+            var sortHelperStub = new Mock<ISortHelper<VehicleMake>>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
 
             int id = 1;
 
-            var expectedMake = new VehicleMake();
+            var returnedMake = new VehicleMake
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
 
-            unitOfWorkStub.Setup(x => x.VehicleMakes.GetById(id))
-                .ReturnsAsync(expectedMake);
+            var domainMake = new VehicleMakeDomainModel
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
 
-            var service = new VehicleMakesService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+            repositoryStub.Setup(repo => repo.GetById(id))
+                .ReturnsAsync(returnedMake);
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeDomainModel>(returnedMake))
+                .Returns(domainMake);
+
+            VehicleMakesService service = new(unitOfWorkStub.Object,
+                loggerStub.Object, sortHelperStub.Object, mapperStub.Object, repositoryStub.Object);
 
             var result = await service.GetVehicleMake(id);
 
             result.Should().BeEquivalentTo(
-                expectedMake,
-                options => options.ComparingByMembers<VehicleMake>());
+                domainMake,
+                options => options.ComparingByMembers<VehicleMakeDomainModel>());
         }
 
         [Fact]
-        public async Task GetVehicleMake_WithUnExistingItem_ReturnsNull()
+        public async Task GetVehicleMake_WithUnexistingItem_ReturnsNull()
         {
             var unitOfWorkStub = new Mock<IUnitOfWork>();
+            var sortHelperStub = new Mock<ISortHelper<VehicleMake>>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
 
             int id = 1;
+            var returnedMake = (VehicleMake)null;
 
-            unitOfWorkStub.Setup(x => x.VehicleMakes.GetById(It.IsAny<int>()))
-                .ReturnsAsync((VehicleMake)null);
+            repositoryStub.Setup(repo => repo.GetById(id))
+                .ReturnsAsync(returnedMake);
 
-            var service = new VehicleMakesService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+            var domainMake = (VehicleMakeDomainModel)null;
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeDomainModel>(returnedMake))
+                .Returns(domainMake);
+
+            VehicleMakesService service = new(unitOfWorkStub.Object,
+               loggerStub.Object, sortHelperStub.Object, mapperStub.Object, repositoryStub.Object);
 
             var result = await service.GetVehicleMake(id);
 
@@ -94,25 +128,62 @@ namespace Service.Tests
         }
 
         [Fact]
-        public async Task Insert_ValidEntry_ReturnInsertedViewModel()
+        public async Task Insert_ValidEntry_ReturnsInsertedViewModel()
         {
             var unitOfWorkStub = new Mock<IUnitOfWork>();
+            var sortHelperStub = new Mock<ISortHelper<VehicleMake>>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
 
-            var makeToInsert = new VehicleMake();
-            var insertedMake = new VehicleMake { Id = 1 };
+            var createVehicleMakeDomainModel = new CreateVehicleMakeDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+            };
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Insert(makeToInsert))
-                .Returns(insertedMake);
+            var makeToCreate = new VehicleMake
+            {
+                Name = "name",
+                Abrv = "abrv"
+            };
 
-            var service = new VehicleMakesService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(createVehicleMakeDomainModel))
+                .Returns(makeToCreate);
 
-            var result = await service.InsertVehicleMake(makeToInsert);
+            var id = new Random().Next();
+
+            var createdMake = new VehicleMake
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
+
+            var createdDomainMake = new VehicleMakeDomainModel
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
+
+            repositoryStub.Setup(repo => repo.Insert(makeToCreate))
+                .Returns(createdMake);
+
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeDomainModel>(createdMake))
+                .Returns(createdDomainMake);
+
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
+                .ReturnsAsync(1);
+
+            VehicleMakesService service = new(unitOfWorkStub.Object,
+               loggerStub.Object, sortHelperStub.Object, mapperStub.Object, repositoryStub.Object);
+
+            var result = await service.InsertVehicleMake(createVehicleMakeDomainModel);
 
             result.Should().BeEquivalentTo(
-                insertedMake,
+                createdDomainMake,
                 options => options.ComparingByMembers<VehicleMake>());
         }
 
@@ -120,66 +191,127 @@ namespace Service.Tests
         public async Task Insert_InsertedItemIsNull_ReturnsNull()
         {
             var unitOfWorkStub = new Mock<IUnitOfWork>();
+            var sortHelperStub = new Mock<ISortHelper<VehicleMake>>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
 
-            var makeToInsert = new VehicleMake();
-            var insertedMake = (VehicleMake)null;
+            var createVehicleMakeDomainModel = new CreateVehicleMakeDomainModel
+            {
+                Name = "name",
+                Abrv = "abrv",
+            };
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Insert(makeToInsert))
-                .Returns(insertedMake);
+            var makeToCreate = new VehicleMake
+            {
+                Name = "name",
+                Abrv = "abrv"
+            };
 
-            var service = new VehicleMakesService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(createVehicleMakeDomainModel))
+                .Returns(makeToCreate);
 
-            var result = await service.InsertVehicleMake(makeToInsert);
+            var id = new Random().Next();
 
-            result.Should().BeNull();
+            var createdMake = (VehicleMake)null;
+
+            var createdDomainMake = (VehicleMakeDomainModel)null;
+
+            repositoryStub.Setup(repo => repo.Insert(makeToCreate))
+                .Returns(createdMake);
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMakeDomainModel>(createdMake))
+                .Returns(createdDomainMake);
+
+            unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
+                .ReturnsAsync(1);
+
+            VehicleMakesService service = new(unitOfWorkStub.Object,
+               loggerStub.Object, sortHelperStub.Object, mapperStub.Object, repositoryStub.Object);
+
+            var result = await service.InsertVehicleMake(createVehicleMakeDomainModel);
+
+            result.Should().BeEquivalentTo(
+                createdDomainMake,
+                options => options.ComparingByMembers<VehicleMake>());
         }
 
         [Fact]
         public async Task Delete_ValidEntry_Returns1()
         {
             var unitOfWorkStub = new Mock<IUnitOfWork>();
+            var sortHelperStub = new Mock<ISortHelper<VehicleMake>>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
 
-            var makeToDelete = new VehicleMake();
+            var id = new Random().Next();
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Delete(makeToDelete));
+            var domainMakeToDelete = new VehicleMakeDomainModel
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
+
+            var makeToDelete = new VehicleMake
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
+
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(domainMakeToDelete))
+                .Returns(makeToDelete);
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
                 .ReturnsAsync(1);
 
-            var service = new VehicleMakesService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+            VehicleMakesService service = new(unitOfWorkStub.Object, loggerStub.Object, 
+                sortHelperStub.Object, mapperStub.Object, repositoryStub.Object);
 
-            var result = await service.DeleteVehicleMake(makeToDelete);
+            var result = await service.DeleteVehicleMake(domainMakeToDelete);
 
+            repositoryStub.Verify(repo => repo.Delete(makeToDelete), Times.Once);
             result.Should().Be(1);
         }
-
+        
         [Fact]
         public async Task Update_ValidEntry_Returns1()
         {
             var unitOfWorkStub = new Mock<IUnitOfWork>();
+            var sortHelperStub = new Mock<ISortHelper<VehicleMake>>();
             var mapperStub = new Mock<IMapper>();
             var loggerStub = new Mock<ILogger<VehicleMakesService>>();
+            var repositoryStub = new Mock<IVehicleMakesRepository>();
 
-            var makeToUpdate = new VehicleMake();
+            var id = new Random().Next();
+            var updatedDomainModel = new VehicleMakeDomainModel
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
 
-            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(makeToUpdate))
-                .Returns(makeToUpdate);
+            var updatedMake = new VehicleMake
+            {
+                Id = id,
+                Name = "name",
+                Abrv = "abrv"
+            };
 
-            unitOfWorkStub.Setup(unitOfWork => unitOfWork.VehicleMakes.Update(makeToUpdate));
+            mapperStub.Setup(mapper => mapper.Map<VehicleMake>(updatedDomainModel))
+                .Returns(updatedMake);
+
+            repositoryStub.Setup(repo => repo.Update(updatedMake));
 
             unitOfWorkStub.Setup(unitOfWork => unitOfWork.Complete())
                 .ReturnsAsync(1);
 
-            var service = new VehicleMakesService(unitOfWorkStub.Object,
-               mapperStub.Object, loggerStub.Object);
+            VehicleMakesService service = new(unitOfWorkStub.Object, loggerStub.Object,
+                sortHelperStub.Object, mapperStub.Object, repositoryStub.Object);
 
-            var result = await service.UpdateVehicleMake(makeToUpdate);
+            var result = await service.UpdateVehicleMake(updatedDomainModel);
 
             result.Should().Be(1);
         }

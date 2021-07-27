@@ -31,6 +31,15 @@ namespace Service
             _mapper = mapper;
         }
 
+        public VehicleModelsService(IUnitOfWork unitOfWork, ILogger<VehicleModelsService> logger,
+            IMapper mapper, IVehicleModelsRepository vehicleModelsRepository)
+        {
+            _unitOfWork = unitOfWork;
+            _logger = logger;
+            _vehicleModelsRepository = vehicleModelsRepository;
+            _mapper = mapper;
+        }
+
         public async Task<IPagedList<VehicleModelDomainModel>> GetVehicleModels(ISortParams sortParams, IPagingParams pagingParams,
             IVehicleModelFilterParams vehicleModelFilterParams)
         {
@@ -62,8 +71,7 @@ namespace Service
         public async Task<int> DeleteVehicleModel(int id)
         {
             _vehicleModelsRepository.Delete(id);
-            var result = await _unitOfWork.Complete();
-            return result;
+            return await _unitOfWork.Complete();
         }
 
         public async Task<int> UpdateVehicleModel(VehicleModelDomainModel vehicleModelDomainModel)
